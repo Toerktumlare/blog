@@ -8,11 +8,18 @@
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
+    "@types/node": "^18.7.23",
+    "@types/react": "^18.0.21",
+    "@types/react-dom": "^18.0.6",
+    "babel-plugin-styled-components": "^2.0.7",
     "gatsby": "^4.24.0",
+    "gatsby-omni-font-loader": "^2.0.2",
     "gatsby-plugin-feed": "^4.24.0",
     "gatsby-plugin-image": "^2.24.0",
     "gatsby-plugin-manifest": "^4.24.0",
     "gatsby-plugin-sharp": "^4.24.0",
+    "gatsby-plugin-styled-components": "^5.24.0",
+    "gatsby-plugin-ts": "^3.1.1",
     "gatsby-remark-copy-linked-files": "^5.24.0",
     "gatsby-remark-images": "^6.24.0",
     "gatsby-remark-prismjs": "^6.24.0",
@@ -21,9 +28,13 @@
     "gatsby-source-filesystem": "^4.24.0",
     "gatsby-transformer-remark": "^5.24.0",
     "gatsby-transformer-sharp": "^4.24.0",
+    "gh-pages": "^4.0.0",
     "prismjs": "^1.29.0",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
+    "react-helmet": "^6.1.0",
+    "styled-components": "^5.3.6",
+    "terminal.css": "^0.7.2",
     "typeface-merriweather": "0.0.72",
     "typeface-montserrat": "0.0.75"
   },
@@ -46,6 +57,7 @@
     "start": "gatsby develop",
     "serve": "gatsby serve",
     "clean": "gatsby clean",
-    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
+    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1",
+    "deploy": "gatsby build --prefix-paths && gh-pages -d public"
   }
 }

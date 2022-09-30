@@ -9,7 +9,7 @@ import * as React from "react"
 import { useStaticQuery, graphql } from "gatsby"
 import { StaticImage } from "gatsby-plugin-image"
 
-const Bio = () => {
+const Bio: React.FC = () => {
   const data = useStaticQuery(graphql`
     query BioQuery {
       site {
@@ -19,7 +19,8 @@ const Bio = () => {
             summary
           }
           social {
-            twitter
+            linkedin
+            stack_overflow
           }
         }
       }
@@ -45,14 +46,18 @@ const Bio = () => {
       {author?.name && (
         <p>
           Written by <strong>{author.name}</strong> {author?.summary || null}
-          {` `}
-          <a href={`https://twitter.com/${social?.twitter || ``}`}>
-            You should follow them on Twitter
+          {` `}I dont have twitter{" "}
+          <a href={`https://www.linkedin.com/in/${social?.linkedin || ``}`}>
+            but i have linkedin
+          </a>{" "}
+          and{" "}
+          <a href={`https://stackoverflow.com/users/${social?.stack_overflow || ``}`}>
+            im on stack overflow
           </a>
         </p>
       )}
     </div>
-  )
-}
+  );
+};
 
 export default Bio

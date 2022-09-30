@@ -1,17 +1,24 @@
-module.exports = {
+import type { GatsbyConfig } from "gatsby";
+
+const config: GatsbyConfig = {
+  graphqlTypegen: true,
   siteMetadata: {
     title: `Gatsby Starter Blog`,
     author: {
-      name: `Kyle Mathews`,
-      summary: `who lives and works in San Francisco building useful things.`,
+      name: `Thomas Andolf`,
+      summary: `i have an unhealthy relationship with code`,
     },
     description: `A starter blog demonstrating what Gatsby can do.`,
-    siteUrl: `https://gatsbystarterblogsource.gatsbyjs.io/`,
+    siteUrl: `https://localhost:8000/`,
     social: {
-      twitter: `kylemathews`,
+      twitter: `tandolf`,
+      linkedin: `thomas-andolf-60966534`,
+      stack_overflow: `1840146`
     },
   },
   plugins: [
+    `gatsby-plugin-ts`,
+    `gatsby-plugin-styled-components`,
     `gatsby-plugin-image`,
     {
       resolve: `gatsby-source-filesystem`,
@@ -68,8 +75,8 @@ module.exports = {
         `,
         feeds: [
           {
-            serialize: ({ query: { site, allMarkdownRemark } }) => {
-              return allMarkdownRemark.nodes.map(node => {
+            serialize: ({ query: { site, allMarkdownRemark } }: any) => {
+              return allMarkdownRemark.nodes.map((node: any) => {
                 return Object.assign({}, node.frontmatter, {
                   description: node.excerpt,
                   date: node.frontmatter.date,
@@ -118,5 +125,20 @@ module.exports = {
         icon: `src/images/gatsby-icon.png`, // This path is relative to the root of the site.
       },
     },
+    {
+      resolve: "gatsby-omni-font-loader",
+      options: {
+        mode: "async",
+        enableListener: true,
+        custom: [
+          {
+            name: ["Menlo"],
+            file: "/fonts/menlo/style.css"
+          },
+        ]
+      }
+    }
   ],
 }
+
+export default config;

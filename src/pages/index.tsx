@@ -1,17 +1,19 @@
 import * as React from "react"
-import { Link, graphql } from "gatsby"
+import { Link, graphql, PageProps} from "gatsby"
 
 import Bio from "../components/bio"
 import Layout from "../components/layout"
 import Seo from "../components/seo"
+import Header from "../components/header"
+import { IndexPageQuery } from "../../graphql-types"
 
-const BlogIndex = ({ data, location }) => {
-  const siteTitle = data.site.siteMetadata?.title || `Title`
+const BlogIndex = ({ data, location }: PageProps<IndexPageQuery>) => {
+  const siteTitle = data.site?.siteMetadata?.title || `Title`
   const posts = data.allMarkdownRemark.nodes
 
   if (posts.length === 0) {
     return (
-      <Layout location={location} title={siteTitle}>
+      <Layout location={location}>
         <Bio />
         <p>
           No blog posts found. Add markdown posts to "content/blog" (or the
@@ -23,10 +25,9 @@ const BlogIndex = ({ data, location }) => {
   }
 
   return (
-    <Layout location={location} title={siteTitle}>
-      <Bio />
+    <Layout location={location}>
       <ol style={{ listStyle: `none` }}>
-        {posts.map(post => {
+        {posts.map((post: any) => {
           const title = post.frontmatter.title || post.fields.slug
 
           return (
@@ -70,8 +71,9 @@ export default BlogIndex
  */
 export const Head = () => <Seo title="All posts" />
 
+
 export const pageQuery = graphql`
-  query {
+  query IndexPage {
     site {
       siteMetadata {
         title
