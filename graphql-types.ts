@@ -249,11 +249,9 @@ export type DirectoryCtimeArgs = {
 export type Site = Node & {
   buildTime?: Maybe<Scalars['Date']>;
   siteMetadata?: Maybe<SiteSiteMetadata>;
-  port?: Maybe<Scalars['Int']>;
-  host?: Maybe<Scalars['String']>;
   graphqlTypegen?: Maybe<SiteGraphqlTypegen>;
-  polyfill?: Maybe<Scalars['Boolean']>;
   pathPrefix?: Maybe<Scalars['String']>;
+  polyfill?: Maybe<Scalars['Boolean']>;
   jsxRuntime?: Maybe<Scalars['String']>;
   trailingSlash?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
@@ -844,11 +842,9 @@ export type QueryAllDirectoryArgs = {
 export type QuerySiteArgs = {
   buildTime?: InputMaybe<DateQueryOperatorInput>;
   siteMetadata?: InputMaybe<SiteSiteMetadataFilterInput>;
-  port?: InputMaybe<IntQueryOperatorInput>;
-  host?: InputMaybe<StringQueryOperatorInput>;
   graphqlTypegen?: InputMaybe<SiteGraphqlTypegenFilterInput>;
-  polyfill?: InputMaybe<BooleanQueryOperatorInput>;
   pathPrefix?: InputMaybe<StringQueryOperatorInput>;
+  polyfill?: InputMaybe<BooleanQueryOperatorInput>;
   jsxRuntime?: InputMaybe<StringQueryOperatorInput>;
   trailingSlash?: InputMaybe<StringQueryOperatorInput>;
   id?: InputMaybe<StringQueryOperatorInput>;
@@ -2079,12 +2075,10 @@ export type SiteFieldsEnum =
   | 'siteMetadata___social___twitter'
   | 'siteMetadata___social___linkedin'
   | 'siteMetadata___social___stack_overflow'
-  | 'port'
-  | 'host'
   | 'graphqlTypegen___typesOutputPath'
   | 'graphqlTypegen___generateOnBuild'
-  | 'polyfill'
   | 'pathPrefix'
+  | 'polyfill'
   | 'jsxRuntime'
   | 'trailingSlash'
   | 'id'
@@ -2225,11 +2219,9 @@ export type SiteGroupConnectionGroupArgs = {
 export type SiteFilterInput = {
   buildTime?: InputMaybe<DateQueryOperatorInput>;
   siteMetadata?: InputMaybe<SiteSiteMetadataFilterInput>;
-  port?: InputMaybe<IntQueryOperatorInput>;
-  host?: InputMaybe<StringQueryOperatorInput>;
   graphqlTypegen?: InputMaybe<SiteGraphqlTypegenFilterInput>;
-  polyfill?: InputMaybe<BooleanQueryOperatorInput>;
   pathPrefix?: InputMaybe<StringQueryOperatorInput>;
+  polyfill?: InputMaybe<BooleanQueryOperatorInput>;
   jsxRuntime?: InputMaybe<StringQueryOperatorInput>;
   trailingSlash?: InputMaybe<StringQueryOperatorInput>;
   id?: InputMaybe<StringQueryOperatorInput>;
