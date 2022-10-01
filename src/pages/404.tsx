@@ -3,9 +3,8 @@ import { graphql, PageProps } from "gatsby"
 
 import Layout from "../components/layout"
 import Seo from "../components/seo"
-import { NotFoundPageQuery } from "../../graphql-types"
 
-const NotFoundPage = ({ data, location }: PageProps<NotFoundPageQuery>) => {
+const NotFoundPage = ({ data, location }: PageProps<Queries.NotFoundPageQuery>) => {
   const siteTitle = data?.site?.siteMetadata?.title || ""
 
   return (

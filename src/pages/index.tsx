@@ -1,13 +1,11 @@
 import * as React from "react"
-import { Link, graphql, PageProps} from "gatsby"
+import { Link, graphql, PageProps } from "gatsby"
 
 import Bio from "../components/bio"
 import Layout from "../components/layout"
 import Seo from "../components/seo"
-import Header from "../components/header"
-import { IndexPageQuery } from "../../graphql-types"
 
-const BlogIndex = ({ data, location }: PageProps<IndexPageQuery>) => {
+const BlogIndex = ({ data, location }: PageProps<Queries.IndexPageQuery>) => {
   const siteTitle = data.site?.siteMetadata?.title || `Title`
   const posts = data.allMarkdownRemark.nodes
 
