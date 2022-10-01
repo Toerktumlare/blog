@@ -132,8 +132,8 @@ const config: GatsbyConfig = {
         enableListener: true,
         custom: [
           {
-            name: ["Menlo Regular"],
-            file: "/fonts/menlo/style.css"
+            name: ["Deja Vu Sans Mono"],
+            file: "/fonts/dejavu/style.css"
           },
         ]
       }

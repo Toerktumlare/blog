@@ -5,7 +5,7 @@ This repository contains the blog for blog.toerktumlare.com
 - [ ] push production build to gh-branch
 - [ ] configure github-pages
 - [ ] setup cname to point correctly
-- [ ] Change background color (darkgreyish, not totally black)
+- [x] Change background color (darkgreyish, not totally black)
 - [ ] create proper bio page
 - [ ] create a first blog post
 - [ ] make sure to be able to switch between dark/light mode

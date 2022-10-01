@@ -1,4 +1,3 @@
-/* CSS Custom Properties Definitions */
 
 :root {
   --maxWidth-none: "none";
@@ -28,10 +27,10 @@
   --spacing-20: 5rem;
   --spacing-24: 6rem;
   --spacing-32: 8rem;
-  --fontFamily-sans: "Menlo Regular", system-ui, -apple-system, BlinkMacSystemFont,
+  --fontFamily-sans: "Deja Vu Sans Mono", system-ui, -apple-system, BlinkMacSystemFont,
     "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif,
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  --fontFamily-serif: "Menlo Regular", "Georgia", Cambria, "Times New Roman",
+  --fontFamily-serif: "Deja Vu Sans Mono", "Georgia", Cambria, "Times New Roman",
     Times, serif;
   --font-body: var(--fontFamily-serif);
   --font-heading: var(--fontFamily-sans);
@@ -46,7 +45,6 @@
   --lineHeight-tight: 1.1;
   --lineHeight-normal: 1.5;
   --lineHeight-relaxed: 1.625;
-  /* 1.200 Minor Third Type Scale */
   --fontSize-0: 0.833rem;
   --fontSize-1: 1rem;
   --fontSize-2: 1.2rem;
@@ -56,14 +54,13 @@
   --fontSize-6: 2.488rem;
   --fontSize-7: 2.986rem;
   --color-primary: #005b99;
-  --color-text: #2e353f;
-  --color-text-light: #4f5969;
-  --color-heading: #1a202c;
-  --color-heading-black: black;
+  --color-text: #dcdfe2;
+  --color-text-light: #959799;
+  --color-heading: #dcdfe2;
+  --color-heading-black: #dcdfe2;
   --color-accent: #d1dce5;
+  --background-color: #222225
 }
-
-/* HTML elements */
 
 *,
 :after,
@@ -76,6 +73,7 @@ html {
   font-size: var(--fontSize-root);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  letter-spacing: -0.5px;
 }
 
 body {
@@ -93,8 +91,6 @@ hr {
   height: 1px;
   border: 0;
 }
-
-/* Heading */
 
 h1,
 h2,
@@ -157,8 +153,6 @@ h6 > a {
   text-decoration: none;
   color: inherit;
 }
-
-/* Prose */
 
 p {
   line-height: var(--lineHeight-relaxed);
@@ -228,7 +222,6 @@ table thead tr th {
   border-bottom: 1px solid var(--color-accent);
 }
 
-/* Link */
 
 a {
   color: var(--color-primary);
@@ -239,7 +232,6 @@ a:focus {
   text-decoration: none;
 }
 
-/* Custom classes */
 
 .global-wrapper {
   margin: var(--spacing-0) auto;
@@ -319,8 +311,6 @@ a:focus {
 .gatsby-highlight {
   margin-bottom: var(--spacing-8);
 }
-
-/* Media queries */
 
 @media (max-width: 42rem) {
   blockquote {
