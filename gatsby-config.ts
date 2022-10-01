@@ -2,7 +2,6 @@ import type { GatsbyConfig } from "gatsby";
 
 const config: GatsbyConfig = {
   graphqlTypegen: true,
-  pathPrefix: `/blog`,
   siteMetadata: {
     title: `Gatsby Starter Blog`,
     author: {
@@ -10,7 +9,7 @@ const config: GatsbyConfig = {
       summary: `i have an unhealthy relationship with code`,
     },
     description: `A starter blog demonstrating what Gatsby can do.`,
-    siteUrl: `https://localhost:8000/`,
+    siteUrl: `https://blog.toerktumlare.com`,
     social: {
       twitter: `tandolf`,
       linkedin: `thomas-andolf-60966534`,
