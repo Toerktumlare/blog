@@ -28,7 +28,7 @@ const Layout = ({ location, title, children }: any) => {
       <footer>
         © {new Date().getFullYear()}, Built by
         {` `}
-        <a href="http://www.github.com/tandolf">tandolf</a>
+        <a href="http://www.github.com/tandolf">toerktumlare</a>
       </footer>
     </div>
   )
