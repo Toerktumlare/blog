@@ -250,8 +250,8 @@ export type Site = Node & {
   buildTime?: Maybe<Scalars['Date']>;
   siteMetadata?: Maybe<SiteSiteMetadata>;
   graphqlTypegen?: Maybe<SiteGraphqlTypegen>;
-  pathPrefix?: Maybe<Scalars['String']>;
   polyfill?: Maybe<Scalars['Boolean']>;
+  pathPrefix?: Maybe<Scalars['String']>;
   jsxRuntime?: Maybe<Scalars['String']>;
   trailingSlash?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
@@ -843,8 +843,8 @@ export type QuerySiteArgs = {
   buildTime?: InputMaybe<DateQueryOperatorInput>;
   siteMetadata?: InputMaybe<SiteSiteMetadataFilterInput>;
   graphqlTypegen?: InputMaybe<SiteGraphqlTypegenFilterInput>;
-  pathPrefix?: InputMaybe<StringQueryOperatorInput>;
   polyfill?: InputMaybe<BooleanQueryOperatorInput>;
+  pathPrefix?: InputMaybe<StringQueryOperatorInput>;
   jsxRuntime?: InputMaybe<StringQueryOperatorInput>;
   trailingSlash?: InputMaybe<StringQueryOperatorInput>;
   id?: InputMaybe<StringQueryOperatorInput>;
@@ -2077,8 +2077,8 @@ export type SiteFieldsEnum =
   | 'siteMetadata___social___stack_overflow'
   | 'graphqlTypegen___typesOutputPath'
   | 'graphqlTypegen___generateOnBuild'
-  | 'pathPrefix'
   | 'polyfill'
+  | 'pathPrefix'
   | 'jsxRuntime'
   | 'trailingSlash'
   | 'id'
@@ -2220,8 +2220,8 @@ export type SiteFilterInput = {
   buildTime?: InputMaybe<DateQueryOperatorInput>;
   siteMetadata?: InputMaybe<SiteSiteMetadataFilterInput>;
   graphqlTypegen?: InputMaybe<SiteGraphqlTypegenFilterInput>;
-  pathPrefix?: InputMaybe<StringQueryOperatorInput>;
   polyfill?: InputMaybe<BooleanQueryOperatorInput>;
+  pathPrefix?: InputMaybe<StringQueryOperatorInput>;
   jsxRuntime?: InputMaybe<StringQueryOperatorInput>;
   trailingSlash?: InputMaybe<StringQueryOperatorInput>;
   id?: InputMaybe<StringQueryOperatorInput>;
