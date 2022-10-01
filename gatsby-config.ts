@@ -132,7 +132,7 @@ const config: GatsbyConfig = {
         enableListener: true,
         custom: [
           {
-            name: ["Menlo"],
+            name: ["Menlo Regular"],
             file: "/fonts/menlo/style.css"
           },
         ]
