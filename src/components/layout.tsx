@@ -1,28 +1,21 @@
 import * as React from "react"
-import { Link } from "gatsby"
 import Header from "./header"
+import styled from "styled-components"
+import { GlobalStyle } from "../pages";
 
-const Layout = ({ location, title, children }: any) => {
-  const rootPath = `${__PATH_PREFIX__}/`
-  const isRootPath = location.pathname === rootPath
-  let header
+const Wrapper = styled.div`
+  margin: 0 auto;
+  max-width: 70rem;
+  background-color: var(--background-color);
+  color: var(--font-color);
+`;
 
-  if (isRootPath) {
-    header = (
-      <h1 className="main-heading">
-        <Link to="/">{title}</Link>
-      </h1>
-    )
-  } else {
-    header = (
-      <Link className="header-link-home" to="/">
-        {title}
-      </Link>
-    )
-  }
+const Layout = ({ children }: any) => {
 
   return (
-    <div className="global-wrapper" data-is-root-path={isRootPath}>
+    <>
+    <GlobalStyle />
+    <Wrapper>
       <Header />
       <main>{children}</main>
       <footer>
@@ -30,7 +23,8 @@ const Layout = ({ location, title, children }: any) => {
         {` `}
         <a href="http://www.github.com/tandolf">toerktumlare</a>
       </footer>
-    </div>
+    </Wrapper>
+    </>
   )
 }
 

@@ -3586,11 +3586,6 @@ type IndexPageQueryVariables = Exact<{ [key: string]: never; }>;
 
 type IndexPageQuery = { readonly site: { readonly siteMetadata: { readonly title: string | null } | null } | null, readonly allMarkdownRemark: { readonly nodes: ReadonlyArray<{ readonly excerpt: string | null, readonly fields: { readonly slug: string | null } | null, readonly frontmatter: { readonly date: string | null, readonly title: string | null, readonly description: string | null } | null }> } };
 
-type navQueryQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-type navQueryQuery = { readonly site: { readonly siteMetadata: { readonly siteUrl: string | null } | null } | null };
-
 type NotFoundPageQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -3600,6 +3595,11 @@ type SeoQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 type SeoQuery = { readonly site: { readonly siteMetadata: { readonly title: string | null, readonly description: string | null, readonly social: { readonly twitter: string | null } | null } | null } | null };
+
+type SiteMetaDataQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+type SiteMetaDataQuery = { readonly site: { readonly siteMetadata: { readonly title: string | null, readonly description: string | null, readonly siteUrl: string | null, readonly author: { readonly name: string | null, readonly summary: string | null } | null, readonly social: { readonly twitter: string | null, readonly linkedin: string | null, readonly stack_overflow: string | null } | null } | null } | null };
 
 type Unnamed_1_QueryVariables = Exact<{ [key: string]: never; }>;
 

@@ -1,62 +1,89 @@
 import * as React from "react"
 import { Link, graphql, PageProps } from "gatsby"
 
-import Bio from "../components/bio"
 import Layout from "../components/layout"
 import Seo from "../components/seo"
+import { createGlobalStyle } from "styled-components"
+import MajorHeading from "../elements/MajorHeading"
+
+export const GlobalStyle = createGlobalStyle`
+  :root {
+    --global-font-size: 15px;
+    --global-line-height: 1.4em;
+    --global-space: 10px;
+    --font-stack: Menlo, Monaco, Lucida Console, Liberation Mono,
+    DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace,
+    serif;
+    --mono-font-stack: Menlo, Monaco, Lucida Console, Liberation Mono,
+    DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace,
+    serif;
+    --background-color: #222225;
+    --page-width: 60em;
+    --font-color: #e8e9ed;
+    --header-font-color: #7a3496
+    --color-gray-700: #a3abba
+    --color-tertiary: #ffdf2c
+    --invert-font-color: #222225;
+    --secondary-color: #a3abba;
+    --tertiary-color: #a3abba;
+    --primary-color: #62c4ff;
+    --error-color: #ff3c74;
+    --progress-bar-background: #3f3f44;
+    --progress-bar-fill: #62c4ff;
+    --code-bg-color: #3f3f44;
+    --input-style: solid;
+    --display-h1-decoration: none;
+  }
+  body {
+    background-color: var(--background-color);
+    color: var(--font-color);
+  }
+
+  ol li::before {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+`
 
 const BlogIndex = ({ data, location }: PageProps<Queries.IndexPageQuery>) => {
   const siteTitle = data.site?.siteMetadata?.title || `Title`
   const posts = data.allMarkdownRemark.nodes
 
-  if (posts.length === 0) {
-    return (
-      <Layout location={location}>
-        <Bio />
-        <p>
-          No blog posts found. Add markdown posts to "content/blog" (or the
-          directory you specified for the "gatsby-source-filesystem" plugin in
-          gatsby-config.js).
-        </p>
-      </Layout>
-    )
-  }
-
   return (
-    <Layout location={location}>
-      <ol style={{ listStyle: `none` }}>
-        {posts.map((post: any) => {
-          const title = post.frontmatter.title || post.fields.slug
+    <>
+      <Layout>
+        <ul>
+          {posts.map((post: any) => {
+            const title = post.frontmatter.title || post.fields.slug
 
-          return (
-            <li key={post.fields.slug}>
-              <article
-                className="post-list-item"
-                itemScope
-                itemType="http://schema.org/Article"
-              >
-                <header>
-                  <h2>
+            return (
+              <li key={post.fields.slug}>
+                <article
+                  className="post-list-item"
+                  itemScope
+                  itemType="http://schema.org/Article"
+                >
+                  <MajorHeading>
                     <Link to={post.fields.slug} itemProp="url">
                       <span itemProp="headline">{title}</span>
                     </Link>
-                  </h2>
+                  </MajorHeading>
                   <small>{post.frontmatter.date}</small>
-                </header>
-                <section>
-                  <p
-                    dangerouslySetInnerHTML={{
-                      __html: post.frontmatter.description || post.excerpt,
-                    }}
-                    itemProp="description"
-                  />
-                </section>
-              </article>
-            </li>
-          )
-        })}
-      </ol>
-    </Layout>
+                  <section>
+                    <p
+                      dangerouslySetInnerHTML={{
+                        __html: post.frontmatter.description || post.excerpt,
+                      }}
+                      itemProp="description" />
+                  </section>
+                </article>
+              </li>
+            )
+          })}
+        </ul>
+      </Layout>
+    </>
   )
 }
 

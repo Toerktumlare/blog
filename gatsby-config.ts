@@ -17,7 +17,6 @@ const config: GatsbyConfig = {
     },
   },
   plugins: [
-    `gatsby-plugin-ts`,
     `gatsby-plugin-styled-components`,
     `gatsby-plugin-image`,
     {

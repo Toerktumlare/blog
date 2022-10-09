@@ -5,7 +5,6 @@ exports.createPages = async ({ graphql, actions, reporter }: any) => {
   const { createPage } = actions
 
   // Define a template for blog post
-  const blogPost = path.resolve(`./src/templates/blog-post.tsx`)
 
   // Get all markdown blog posts sorted by date
   const result = await graphql(
@@ -41,6 +40,7 @@ exports.createPages = async ({ graphql, actions, reporter }: any) => {
   // `context` is available in the template as a prop and as a variable in GraphQL
 
   if (posts.length > 0) {
+    const blogPost = path.resolve(`./src/templates/blog-post.tsx`)
     posts.forEach((post: any, index: any) => {
       const previousPostId = index === 0 ? null : posts[index - 1].id
       const nextPostId = index === posts.length - 1 ? null : posts[index + 1].id
@@ -58,12 +58,15 @@ exports.createPages = async ({ graphql, actions, reporter }: any) => {
   }
 }
 
+// Creates a new node field called "slug" that contains the folder name
 exports.onCreateNode = ({ node, actions, getNode }: any) => {
   const { createNodeField } = actions
 
   if (node.internal.type === `MarkdownRemark`) {
+    // creates an actual url from a filepath, node the graphql value, get node is the method that gets the node
     const value = createFilePath({ node, getNode })
-
+    
+    // Creates new query'able field with name of 'slug'
     createNodeField({
       name: `slug`,
       node,

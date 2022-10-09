@@ -1,21 +1,14 @@
 import { useStaticQuery, graphql } from "gatsby"
 import * as React from "react"
+import { SiteMetadata, useSiteMetadata } from "../hooks/site-metadata"
 
 const Header: React.FC = () => {
-  const data: any = useStaticQuery(graphql`
-    query navQuery {
-      site {
-        siteMetadata {
-          siteUrl
-        }
-      }
-    }
-  `)
+  const siteMetadata: SiteMetadata = useSiteMetadata()
   return (
     <header className="terminal-nav">
       <div className="terminal-logo">
         <div className="logo terminal-prompt">
-          <a className="no-style" href={data.site.siteMetadata.siteUrl}>
+          <a className="no-style" href={siteMetadata.author.name}>
             Without followers, evil cannot spread
           </a>
         </div>

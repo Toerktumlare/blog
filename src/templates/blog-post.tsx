@@ -4,12 +4,13 @@ import { Link, graphql, PageProps } from "gatsby"
 import Bio from "../components/bio"
 import Layout from "../components/layout"
 import Seo from "../components/seo"
-import { BlogPostBySlugQuery } from "../../graphql-types"
+import H1 from "../elements/H1"
+import { GlobalStyle } from "../pages"
 
 const BlogPostTemplate = ({
   data: { previous, next, site, markdownRemark: post },
   location,
-}: PageProps<BlogPostBySlugQuery>) => {
+}: PageProps<Queries.BlogPostBySlugQuery>) => {
   const siteTitle = site?.siteMetadata?.title || `Title`
 
   return (
@@ -20,7 +21,7 @@ const BlogPostTemplate = ({
         itemType="http://schema.org/Article"
       >
         <header>
-          <h1 itemProp="headline">{post?.frontmatter?.title}</h1>
+          <H1 itemProp="headline">{post?.frontmatter?.title}</H1>
           <p>{post?.frontmatter?.date}</p>
         </header>
         <section
@@ -58,11 +59,11 @@ const BlogPostTemplate = ({
           </li>
         </ul>
       </nav>
-    </Layout>
+      </Layout>
   )
 }
 
-export const Head = ({ data: { markdownRemark: post } }: PageProps<BlogPostBySlugQuery>) => {
+export const Head = ({ data: { markdownRemark: post } }: PageProps<Queries.BlogPostBySlugQuery>) => {
   return (
     <Seo
       title={post?.frontmatter?.title}
