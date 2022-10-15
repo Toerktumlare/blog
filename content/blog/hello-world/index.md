@@ -142,6 +142,13 @@ This is a paragraph.
 - **bold** goes here
 ```
 
+Some java code
+```java
+public String function helloworld() {
+    return "Hello World";
+}
+```
+
 1. Buy flour and salt
 1. Mix together with water
 1. Bake

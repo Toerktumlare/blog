@@ -44,6 +44,20 @@ export const GlobalStyle = createGlobalStyle`
     margin: 0;
     padding: 0;
   }
+
+  ul > li::after {
+    content: none;
+  }
+
+  code::after, code::before {
+    content: none;
+  }
+
+  .mermaid {
+    margin-top: 4em;
+    margin-bottom: 4em;
+
+  }
 `
 
 const BlogIndex = ({ data, location }: PageProps<Queries.IndexPageQuery>) => {
