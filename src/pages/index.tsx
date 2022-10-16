@@ -48,7 +48,7 @@ export const GlobalStyle = createGlobalStyle`
     padding: 0;
   }
 
-  ul > li::after {
+  .no-line::after {
     content: none;
   }
 
@@ -92,7 +92,7 @@ const BlogIndex = ({ data, location }: PageProps<Queries.IndexPageQuery>) => {
             const title = post.frontmatter.title || post.fields.slug
 
             return (
-              <li key={post.fields.slug}>
+              <li key={post.fields.slug} className="no-line">
                 <article
                   className="post-list-item"
                   itemScope
