@@ -45,7 +45,7 @@ const Bio: React.FC = () => {
       />
       {author?.name && (
         <p>
-          Written by <strong>{author.name}</strong> {author?.summary || null}
+          Written by <strong>{author.name}</strong>
           {` `}I dont have twitter{" "}
           <a href={`https://www.linkedin.com/in/${social?.linkedin || ``}`}>
             but i have linkedin
@@ -53,9 +53,9 @@ const Bio: React.FC = () => {
           and{" "}
           <a href={`https://stackoverflow.com/users/${social?.stack_overflow || ``}`}>
             im on stack overflow
-          </a>
+          </a>.
         </p>
-      )}
+        )}
     </div>
   );
 };

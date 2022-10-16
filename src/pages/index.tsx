@@ -33,6 +33,9 @@ export const GlobalStyle = createGlobalStyle`
     --code-bg-color: #3f3f44;
     --input-style: solid;
     --display-h1-decoration: none;
+    --spacing-4: 4rem;
+    --spacing-0: 0;
+    --spacing-16: 4rem;
   }
   body {
     background-color: var(--background-color);
@@ -57,6 +60,23 @@ export const GlobalStyle = createGlobalStyle`
     margin-top: 4em;
     margin-bottom: 4em;
 
+  }
+
+  .bio-avatar {
+    margin-right: var(--spacing-4);
+    margin-bottom: var(--spacing-0);
+    min-width: 50px;
+    border-radius: 100%;
+  }
+
+  .bio {
+    display: flex;
+    margin-bottom: var(--spacing-16);
+  }
+
+  .bio p {
+    margin-top: 0.8em;
+    margin-bottom: var(--spacing-0);
   }
 `
 
