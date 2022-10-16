@@ -225,6 +225,13 @@ To extract our 4, 6-bit numbers from our 32-bit number we need to do some more b
 Now that we have our 4 new values, we can do a simple lookup table check to see what letter our new values represents and create as new string from it.
 
 ```rust
+const BASE64_CHARS: &[char] = &[
+    'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S',
+    'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l',
+    'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '0', '1', '2', '3', '4',
+    '5', '6', '7', '8', '9', '+', '/',
+];
+
 let c1 = BASE64_CHARS[n1 as usize];
 let c2 = BASE64_CHARS[n2 as usize];
 let c3 = BASE64_CHARS[n3 as usize];
@@ -236,9 +243,11 @@ result.push(c4);
 ```
 
 
-## And then a Decoder
+# And then a Decoder
 
-De padding
+To decode, we basically just need to remove the padding, and then do the entire process but in reverse. One thing to remember is that before the decoder process can be run you will probably want to do some validation to make sure that what you are about to decode is a proper base64 string. I wont show that code here, but doing a regexp check that it includes only the allowed characters from the base64 alphabet will usually suffice.
+
+So we start out by stripping off the padding, and replacing the equal signs with something else. Anything will work.
 
 ```rust
 let suffix = if input.ends_with("==") {
@@ -249,11 +258,14 @@ let suffix = if input.ends_with("==") {
     ""
 };
 
+// remove the equal signs
 let mut input = input[..input.len() - suffix.len()].to_string();
+
+// push new characters on the end if needed
 input.push_str(suffix);
 ```
 
-And the decoder
+After the padding has been replaced, we enumerate, but this time 4 bytes at a time (instead of 3 like we did during the encoding process). We then get the value of each of the bytes and check their indexes in our array of Base64 characters that we used earlier.
 
 ```rust
 let value_bytes = input.as_bytes();
@@ -266,23 +278,96 @@ for (i, _) in input_iter {
     let v1 = Decoder::index_of(value_bytes[i + 1]);
     let v2 = Decoder::index_of(value_bytes[i + 2]);
     let v3 = Decoder::index_of(value_bytes[i + 3]);
-
-    let n: u32 = ((v as u32) << 18) + ((v1 as u32) << 12) + ((v2 as u32) << 6) + (v3 as u32);
-
-    let c = n >> 16 & 0xFF;
-    let c1 = n >> 8 & 0xFF;
-    let c2 = n & 0xFF;
-
-    bytes.push(c as u8);
-    bytes.push(c1 as u8);
-    bytes.push(c2 as u8);
 }
 
+fn index_of(input: u8) -> usize {
+    BASE64_CHARS
+        .iter()
+        .position(|c| c == &(input as char))
+        .unwrap()
+}
+```
+
+Like before, we bit shift and mask, but this time we do it a little bit different because we want to go from 4 bytes, to 3 bytes per group.
+```rust
+let n: u32 = ((v as u32) << 18) + ((v1 as u32) << 12) + ((v2 as u32) << 6) + (v3 as u32);
+```
+
+This time though, we need to shift things a little bit differently.
+
+```
+// We extract a byte but this has only 6 bits in a 8 bit space
+0011 1111
+
+// we then cast the alphabetic value to a u32 (32bits)
+0000 0000 0000 0000 0000 0000 0011 1111
+
+// then we shift the value 18 steps to the left
+0000 0000 1111 1100 0000 0000 0000 0000
+
+// We do the same with the second value but only shift it 12 bits
+0000 0000 0000 0011 1111 1100 0000 0000
+
+// the 3rd is shifted 6 bits
+0000 0000 0000 0000 0000 1111 1100 0000
+
+// And the 4th is not shifted at all
+0000 0000 0000 0000 0000 0000 0011 1111
+
+// we then add them all together and each byte gets their own space
+0000 0000 1111 1111 1111 1111 1111 1111
+```
+
+After the extraction of the data, we need to shift the bits a little bit more to create our 3 groups of 8 bits that we can store in a proper byte array. That is done in the following way.
+
+```bash
+// We start out with our newly created 32 bit number
+0000 0000 1111 1111 1111 1111 1111 1111
+
+   // We then bit shift it down 16 steps and mask off everything above the 8th bit
+   0000 0000 0000 0000 0000 0000 1111 1111
+&  0000 0000 0000 0000 0000 0000 1111 1111
+------------------------------------------
+   0000 0000 0000 0000 0000 0000 1111 1111
+
+   // second value is created by a shift by 8 steps down and masked the same way
+   0000 0000 0000 0000 1111 1111 1111 1111
+&  0000 0000 0000 0000 0000 0000 1111 1111
+------------------------------------------
+   0000 0000 0000 0000 0000 0000 1111 1111
+
+   // third we dont shift, we just mask off
+   0000 0000 1111 1111 1111 1111 1111 1111
+&  0000 0000 0000 0000 0000 0000 1111 1111
+------------------------------------------
+   0000 0000 0000 0000 0000 0000 1111 1111
+```
+
+All of the operations above are done with the following code. And then we just push the decoded bytes onto a new list of `bytes`. 
+```rust
+let c = n >> 16 & 0xFF;
+let c1 = n >> 8 & 0xFF;
+let c2 = n & 0xFF;
+
+bytes.push(c as u8);
+bytes.push(c1 as u8);
+bytes.push(c2 as u8);
+```
+
+Before we can convert this to a proper string we lastly need to remove the characters we used for padding, and then we convert the entire string to a utf-8 string that we can return.
+```rust
+// remove padding characters
 for _ in 0..suffix.len() {
     bytes.pop();
 }
 
+// create a utf-8 string from the provided data
 let output = String::from_utf8(bytes).unwrap();
 ```
 
-## Summary
+And thats it!
+# Summary
+
+So in this post we have looked closer at what base64 is and what it is used for. We also looked at how to implement our own version of a base64 encoder and decoder. There are probably many more different ways and more efficient ways you can implement this to be more effective, but i found this to be fun and a learning experience. The entire code with a working example can be found on my [github](https://github.com/Tandolf/base64). 
+
+Until next time, have a nice one.
