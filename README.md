@@ -17,3 +17,15 @@ This repository contains the blog for blog.toerktumlare.com
 - [ ] rewrite all css to styled component
 - [ ] change from using markdown, to use mdx
 - [ ] make sure home button works
+- [ ] fix main header link in both test and prod
+- [ ] implement tags on blog posts (frontmatter)
+- [ ] switch from using markdown to use mdx
+
+## CSS changes:
+ - [ ] next/previous blog post little larger font
+ - [ ] date in blog post, grayish color
+ - [ ] footer text, smaller
+ - [ ] design tags
+ - [ ] style a blockquote component
+ - [ ] style a warning component
+ - [ ] larger h1
