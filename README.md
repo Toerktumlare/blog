@@ -3,10 +3,10 @@ This repository contains the blog for blog.toerktumlare.com
 
 ## TODO's
 
-- [X] set up repository and push repo
-- [X] push production build to gh-branch
-- [X] configure github-pages
-- [C] setup cname to point correctly
+- [x] set up repository and push repo
+- [x] push production build to gh-branch
+- [x] configure github-pages
+- [x] setup cname to point correctly
 - [x] Change background color (darkgreyish, not totally black)
 - [ ] create proper bio page
 - [x] clean up footer
