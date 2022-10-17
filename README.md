@@ -19,7 +19,6 @@ This repository contains the blog for blog.toerktumlare.com
 - [ ] make sure home button works
 - [ ] fix main header link in both test and prod
 - [ ] implement tags on blog posts (frontmatter)
-- [ ] switch from using markdown to use mdx
 
 ## CSS changes:
  - [ ] next/previous blog post little larger font
