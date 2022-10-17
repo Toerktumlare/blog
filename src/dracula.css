@@ -19,6 +19,10 @@ pre[class*="language-"] {
   hyphens: none;
 }
 
+pre code {
+  overflow-x: auto !important;
+}
+
 /* Code blocks */
 pre[class*="language-"] {
   padding: 1em;
@@ -26,8 +30,6 @@ pre[class*="language-"] {
   margin-bottom: 4em;
   overflow: auto;
   border-radius: 0.3em;
-  overflow-x: auto;
-  overflow-y: auto;
 }
 
 :not(pre)>code[class*="language-"],
