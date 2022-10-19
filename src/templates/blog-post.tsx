@@ -4,8 +4,9 @@ import { Link, graphql, PageProps } from "gatsby"
 import Bio from "../components/bio"
 import Layout from "../components/layout"
 import Seo from "../components/seo"
-import H1 from "../elements/H1"
 import "../dracula.css"
+import { DateText, LinkText } from "./styles"
+import { GlobalStyle } from "../pages"
 
 const BlogPostTemplate = ({
   data: { previous, next, site, markdownRemark: post },
@@ -22,7 +23,7 @@ const BlogPostTemplate = ({
       >
         <header>
           <h1 itemProp="headline">{post?.frontmatter?.title}</h1>
-          <p>{post?.frontmatter?.date}</p>
+          <DateText>{post?.frontmatter?.date}</DateText>
         </header>
         <section
           dangerouslySetInnerHTML={{ __html: post?.html || "" }}
@@ -46,14 +47,15 @@ const BlogPostTemplate = ({
           <li>
             {previous && (
               <Link to={previous?.fields?.slug || ""} rel="prev">
-                ← {previous?.frontmatter?.title || ""}
+                <LinkText>← {previous?.frontmatter?.title || ""}</LinkText>
               </Link>
             )}
           </li>
           <li>
             {next && (
+              
               <Link to={next?.fields?.slug || ""} rel="next">
-                {next?.frontmatter?.title} →
+                <LinkText>{next?.frontmatter?.title} →</LinkText>
               </Link>
             )}
           </li>

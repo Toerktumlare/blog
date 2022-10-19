@@ -20,14 +20,14 @@ export const GlobalStyle = createGlobalStyle`
     --background-color: #222225;
     --page-width: 60em;
     --font-color: #e8e9ed;
-    --header-font-color: #7a3496
-    --color-gray-700: #a3abba
-    --color-tertiary: #ffdf2c
+    --header-font-color: #7a3496;
+    --color-gray-700: #BFDBF7;
+    --color-tertiary: #ffdf2c;
     --invert-font-color: #222225;
-    --secondary-color: #a3abba;
+    --secondary-color: #1F7A8C;
     --tertiary-color: #a3abba;
     --primary-color: #62c4ff;
-    --error-color: #ff3c74;
+    --error-color: #A31621;
     --progress-bar-background: #3f3f44;
     --progress-bar-fill: #62c4ff;
     --code-bg-color: #3f3f44;

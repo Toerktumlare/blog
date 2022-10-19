@@ -2,6 +2,7 @@ import * as React from "react"
 import Header from "./header"
 import styled from "styled-components"
 import { GlobalStyle } from "../pages";
+import Footer from "./footer";
 
 const Wrapper = styled.div`
   margin: 0 auto;
@@ -14,15 +15,11 @@ const Layout = ({ children }: any) => {
 
   return (
     <>
-    <GlobalStyle />
     <Wrapper>
+      <GlobalStyle />
       <Header />
       <main>{children}</main>
-      <footer>
-        © {new Date().getFullYear()}, Built by
-        {` `}
-        <a href="http://www.github.com/tandolf">toerktumlare</a>
-      </footer>
+      <Footer />
     </Wrapper>
     </>
   )

@@ -21,9 +21,9 @@ This repository contains the blog for blog.toerktumlare.com
 - [ ] implement tags on blog posts (frontmatter)
 
 ## CSS changes:
- - [ ] next/previous blog post little larger font
- - [ ] date in blog post, grayish color
- - [ ] footer text, smaller
+ - [x] next/previous blog post little larger font
+ - [x] date in blog post, grayish color
+ - [x] footer text, smaller
  - [ ] design tags
  - [ ] style a blockquote component
  - [ ] style a warning component
