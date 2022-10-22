@@ -2,6 +2,7 @@
 title: Implementing base64 in rust
 date: "2022-09-10T21:08:00.000Z"
 description: "Honestly, i have a confession to make. I have used base64 numerous times, I know why you use it. I've had a vague understanding of how it is implemented. But i have never ever fully understood how it works. Until now. Lets implement a basic base64 program in Rust."
+tags: rust, binary
 ---
 
 I have a confession to make. Please don't think any less of me, but i have never really understood how Base64 _actually_ works. I know what it is used for. I know when to use it and I have a vague understanding of how it is implemented, but i have never **fully** understood it. Until now. 
@@ -10,7 +11,7 @@ I was looking at new things to implement and i stumbled across the [rfc for Base
 
 So in this post im going to try to explain what base64 is, a bit of how it works, and then we are going to implement a simple encoder and decoder.
 
-# What is it used for?
+## What is it used for?
 Lets look at how [wikipedia](https://en.wikipedia.org/wiki/Base64) describes base64.
 ```
 Base64 is designed to carry data stored in binary formats across channels that only reliably support text content.
@@ -35,7 +36,7 @@ graph LR
 - We send that data to a receiving server or client
 - The server/client decodes the base64 encoded data and recreates the original data on the other side.
 
-# So what is base64 actually?
+## So what is base64 actually?
 On the internet there is a saying which goes as follows, _"there is no such thing as plain text"_. which is completely true. In the computer world all text is represented by 0 and 1's. But if we have a series of bits then what text it represents depends on how we look at the bits. 3 bytes, represent 24 bits, (1 byte = 8 bits). But we can also think of 24 bits as 4 groups of 6 bits.
 
 Here i'll show you a visual representation taken straight out of the rfc which shows what im talking about.
@@ -82,7 +83,7 @@ The rfc show us just that.
 
 Here we can see the defined base64 alphabet. So by mapping each group of 6 bits to a number between 0-64 (using binary to real number conversion) we can then select the correct letter and in the end encode our data with a limited text range.
 
-# Padding
+## Padding
 You can often spot a base64 string because its very common that the a base64 text representation ends with one or two equal signs (=). You see that in order for us to convert something we need to bits to line up.
 
 Data that isn't suitable for conversion.
@@ -141,7 +142,7 @@ let mut result: String = result.chars().take(result_length).collect();
 result.push_str(&padding);
 ```
 
-# Lets write an encoder
+## Lets write an encoder
 To encode some data into base 64, we are going to split this up into 4 different steps. I will explain the steps as we go, but we will start out by creating a loop that will extract out 3 bytes at a time in a loop. Because as we explained earlier, we want to convert 3 groups of 8 bits, into 4 groups of 6 bytes.
 
 ```rust
@@ -243,7 +244,7 @@ result.push(c4);
 ```
 
 
-# And then a Decoder
+## And then a Decoder
 
 To decode, we basically just need to remove the padding, and then do the entire process but in reverse. One thing to remember is that before the decoder process can be run you will probably want to do some validation to make sure that what you are about to decode is a proper base64 string. I wont show that code here, but doing a regexp check that it includes only the allowed characters from the base64 alphabet will usually suffice.
 
@@ -366,7 +367,7 @@ let output = String::from_utf8(bytes).unwrap();
 ```
 
 And thats it!
-# Summary
+## Summary
 
 So in this post we have looked closer at what base64 is and what it is used for. We also looked at how to implement our own version of a base64 encoder and decoder. There are probably many more different ways and more efficient ways you can implement this to be more effective, but i found this to be fun and a learning experience. The entire code with a working example can be found on my [github](https://github.com/Tandolf/base64). 
 

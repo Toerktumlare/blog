@@ -6,13 +6,14 @@ import Layout from "../components/layout"
 import Seo from "../components/seo"
 import "../dracula.css"
 import { DateText, LinkText } from "./styles"
-import { GlobalStyle } from "../pages"
+import TagSection from "../components/tagSection"
 
 const BlogPostTemplate = ({
   data: { previous, next, site, markdownRemark: post },
   location,
 }: PageProps<Queries.BlogPostBySlugQuery>) => {
   const siteTitle = site?.siteMetadata?.title || `Title`
+  const tags = !post?.frontmatter?.tags ? [] : post.frontmatter.tags.replaceAll(/\s/g, '').split(',');
 
   return (
     <Layout location={location}>
@@ -21,14 +22,16 @@ const BlogPostTemplate = ({
         itemScope
         itemType="http://schema.org/Article"
       >
-        <header>
+        <header style={{ marginBottom: 30 }}>
           <h1 itemProp="headline">{post?.frontmatter?.title}</h1>
           <DateText>{post?.frontmatter?.date}</DateText>
+          <TagSection tags={tags} />
         </header>
         <section
           dangerouslySetInnerHTML={{ __html: post?.html || "" }}
           itemProp="articleBody"
         />
+        <TagSection tags={tags} />
         <hr />
         <footer>
           <Bio />
@@ -95,6 +98,7 @@ export const pageQuery = graphql`
         title
         date(formatString: "MMMM DD, YYYY")
         description
+        tags
       }
     }
     previous: markdownRemark(id: { eq: $previousPostId }) {

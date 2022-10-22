@@ -5,6 +5,8 @@ import Layout from "../components/layout"
 import Seo from "../components/seo"
 import { createGlobalStyle } from "styled-components"
 import MajorHeading from "../elements/MajorHeading"
+import Tag from "../elements/Tag"
+import TagSection from "../components/tagSection"
 
 export const GlobalStyle = createGlobalStyle`
   :root {
@@ -78,6 +80,15 @@ export const GlobalStyle = createGlobalStyle`
     margin-top: 0.8em;
     margin-bottom: var(--spacing-0);
   }
+  
+  h1 {
+    font-size: 46px;
+  }
+
+  h2 {
+    margin-top: 150px;
+    font-size: 36px;
+  }
 `
 
 const BlogIndex = ({ data, location }: PageProps<Queries.IndexPageQuery>) => {
@@ -90,6 +101,7 @@ const BlogIndex = ({ data, location }: PageProps<Queries.IndexPageQuery>) => {
         <ul>
           {posts.map((post: any) => {
             const title = post.frontmatter.title || post.fields.slug
+            const tags = !post.frontmatter.tags ? [] : post.frontmatter.tags.replaceAll(/\s/g, '').split(',');
 
             return (
               <li key={post.fields.slug} className="no-line">
@@ -111,6 +123,7 @@ const BlogIndex = ({ data, location }: PageProps<Queries.IndexPageQuery>) => {
                       }}
                       itemProp="description" />
                   </section>
+                  <TagSection tags={tags} />
                 </article>
               </li>
             )
@@ -148,6 +161,7 @@ export const pageQuery = graphql`
           date(formatString: "MMMM DD, YYYY")
           title
           description
+          tags
         }
       }
     }

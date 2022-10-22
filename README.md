@@ -24,7 +24,8 @@ This repository contains the blog for blog.toerktumlare.com
  - [x] next/previous blog post little larger font
  - [x] date in blog post, grayish color
  - [x] footer text, smaller
- - [ ] design tags
+ - [x] design tags
  - [ ] style a blockquote component
  - [ ] style a warning component
- - [ ] larger h1
+ - [x] larger h1
+ - [ ] add different colors depending on tag
