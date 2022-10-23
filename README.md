@@ -17,7 +17,7 @@ This repository contains the blog for blog.toerktumlare.com
 - [ ] rewrite all css to styled component
 - [ ] change from using markdown, to use mdx
 - [x] make sure home button works
-- [ ] fix main header link in both test and prod
+- [x] fix main header link in both test and prod
 - [x] implement tags on blog posts (frontmatter)
 
 ## CSS changes:
