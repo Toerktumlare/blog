@@ -8,7 +8,7 @@ This repository contains the blog for blog.toerktumlare.com
 - [x] configure github-pages
 - [x] setup cname to point correctly
 - [x] Change background color (darkgreyish, not totally black)
-- [ ] create proper bio page
+- [x] create proper bio page
 - [x] clean up footer
 - [x] write blog post about base64
 - [ ] make sure to be able to switch between dark/light mode

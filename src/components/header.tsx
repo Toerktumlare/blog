@@ -1,4 +1,4 @@
-import { useStaticQuery, graphql } from "gatsby"
+import { useStaticQuery, graphql, Link } from "gatsby"
 import * as React from "react"
 import { SiteMetadata, useSiteMetadata } from "../hooks/site-metadata"
 
@@ -21,9 +21,7 @@ const Header: React.FC = () => {
             </a>
           </li>
           <li>
-            <a className="menu-item" href="#">
-              about
-            </a>
+            <Link className="menu-item" to="about">about</Link>
           </li>
         </ul>
       </nav>
