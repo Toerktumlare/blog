@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Gatsby Starter Blog RSS Feed]]></title><description><![CDATA[A starter blog demonstrating what Gatsby can do.]]></description><link>https://blog.toerktumlare.com</link><generator>GatsbyJS</generator><lastBuildDate>Sun, 23 Oct 2022 00:30:50 GMT</lastBuildDate><item><title><![CDATA[Implementing base64 in rust]]></title><description><![CDATA[I have a confession to make. Please don’t think any less of me, but i have never really understood how Base64 actually works. I know what it…]]></description><link>https://blog.toerktumlare.com/base64-in-rust/</link><guid isPermaLink="false">https://blog.toerktumlare.com/base64-in-rust/</guid><pubDate>Sat, 10 Sep 2022 21:08:00 GMT</pubDate><content:encoded>&lt;p&gt;I have a confession to make. Please don’t think any less of me, but i have never really understood how Base64 &lt;em&gt;actually&lt;/em&gt; works. I know what it is used for. I know when to use it and I have a vague understanding of how it is implemented, but i have never &lt;strong&gt;fully&lt;/strong&gt; understood it. Until now.&lt;/p&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Gatsby Starter Blog RSS Feed]]></title><description><![CDATA[A starter blog demonstrating what Gatsby can do.]]></description><link>https://blog.toerktumlare.com</link><generator>GatsbyJS</generator><lastBuildDate>Sun, 23 Oct 2022 21:20:30 GMT</lastBuildDate><item><title><![CDATA[Implementing base64 in rust]]></title><description><![CDATA[I have a confession to make. Please don’t think any less of me, but i have never really understood how Base64 actually works. I know what it…]]></description><link>https://blog.toerktumlare.com/base64-in-rust/</link><guid isPermaLink="false">https://blog.toerktumlare.com/base64-in-rust/</guid><pubDate>Sat, 10 Sep 2022 21:08:00 GMT</pubDate><content:encoded>&lt;p&gt;I have a confession to make. Please don’t think any less of me, but i have never really understood how Base64 &lt;em&gt;actually&lt;/em&gt; works. I know what it is used for. I know when to use it and I have a vague understanding of how it is implemented, but i have never &lt;strong&gt;fully&lt;/strong&gt; understood it. Until now.&lt;/p&gt;
 &lt;p&gt;I was looking at new things to implement and i stumbled across the &lt;a href=&quot;https://www.rfc-editor.org/rfc/rfc4648&quot;&gt;rfc for Base64&lt;/a&gt; and thought to myself. &lt;em&gt;Maybe I can implement this, in rust&lt;/em&gt;. So i sat down and read &lt;a href=&quot;https://www.rfc-editor.org/rfc/rfc4648&quot;&gt;rfc 4648&lt;/a&gt; and started to understand how it actually works. I then googled a bit and looked at other implementations.&lt;/p&gt;
 &lt;p&gt;So in this post im going to try to explain what base64 is, a bit of how it works, and then we are going to implement a simple encoder and decoder.&lt;/p&gt;
 &lt;h2&gt;What is it used for?&lt;/h2&gt;
@@ -271,7 +271,353 @@ bytes&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span clas
 &lt;p&gt;And thats it!&lt;/p&gt;
 &lt;h2&gt;Summary&lt;/h2&gt;
 &lt;p&gt;So in this post we have looked closer at what base64 is and what it is used for. We also looked at how to implement our own version of a base64 encoder and decoder. There are probably many more different ways and more efficient ways you can implement this to be more effective, but i found this to be fun and a learning experience. The entire code with a working example can be found on my &lt;a href=&quot;https://github.com/Tandolf/base64&quot;&gt;github&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;Until next time, have a nice one.&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Hello World]]></title><description><![CDATA[This is my first post on my new fake blog! How exciting! I’m sure I’ll write a lot more interesting things in the future. Oh, and here’s a…]]></description><link>https://blog.toerktumlare.com/hello-world/</link><guid isPermaLink="false">https://blog.toerktumlare.com/hello-world/</guid><pubDate>Fri, 01 May 2015 22:12:03 GMT</pubDate><content:encoded>&lt;p&gt;This is my first post on my new fake blog! How exciting!&lt;/p&gt;
+&lt;p&gt;Until next time, have a nice one.&lt;/p&gt;</content:encoded></item><item><title><![CDATA[What was CVE 2020–0601 aka. Curveball?]]></title><description><![CDATA[Monday the 13th of January Brian Krebs published on his blog that he had sources telling him that the day after, Microsoft would release…]]></description><link>https://blog.toerktumlare.com/cve-2020-0601/</link><guid isPermaLink="false">https://blog.toerktumlare.com/cve-2020-0601/</guid><pubDate>Thu, 30 Jan 2020 22:12:03 GMT</pubDate><content:encoded>&lt;p&gt;Monday the 13th of January Brian Krebs published on his blog that he had sources telling him that the day after, Microsoft would release software updates that would fix a vulnerability in the Windows Crypto API.&lt;/p&gt;
+&lt;p&gt;And indeed, the day after on the 14th of January, NSA released a cybersecurity advisory that disclosed a vulnerability in the crypto API. This vulnerability allowed an attacker to defeat the certificate validation in Windows 10 and it would affect TLS, code signing etc.&lt;/p&gt;
+&lt;p&gt;Less than 24 hours later, security researcher Salim Rashid published a proof of concept on his twitter account showing that he successfully “rick rolled” github.com and nsa.gov using a custom-made CA certificate.&lt;/p&gt;
+&lt;blockquote class=&quot;twitter-tweet&quot; data-theme=&quot;dark&quot;&gt;&lt;p lang=&quot;und&quot; dir=&quot;ltr&quot;&gt;CVE-2020-0601 &lt;a href=&quot;https://t.co/8tJsJqvnHj&quot;&gt;pic.twitter.com/8tJsJqvnHj&lt;/a&gt;&lt;/p&gt;&amp;mdash; ✨saleem✨ ⍼ (@saleemrash1d) &lt;a href=&quot;https://twitter.com/saleemrash1d/status/1217495681230954506?ref_src=twsrc%5Etfw&quot;&gt;January 15, 2020&lt;/a&gt;&lt;/blockquote&gt; &lt;script async src=&quot;https://platform.twitter.com/widgets.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt; 
+&lt;p&gt;Shortly after this, Ollypwn aka. Oliver Lyak, a security researcher from Denmark, published a proof of concept exploit on GitHub for anyone to use. And what struck the world was that the exploit consisted of less than 10 rows of code and anyone could do it.&lt;/p&gt;
+&lt;p&gt;For the rest of this blog post I’m going to try to explain how this vulnerability works on a very high level, and point out why this exploit is extremely powerful.&lt;/p&gt;
+&lt;h2&gt;CA Certificates&lt;/h2&gt;
+&lt;p&gt;Let’s start by looking at what a basic CA Certificate consists of. These types of certificates are used to sign other certificates, as a form of trust. You have a certificate and you let a well-known certificate authority (CA) sign your certificate. By signing, they sort of “vouch” that you are who you claim to be.&lt;/p&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 630px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 50.632911392405056%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAKCAIAAAA7N+mxAAAACXBIWXMAAAsTAAALEwEAmpwYAAABbUlEQVQoz32SPWvCQBiA/TtCRZohJEOge3cHJ5dOzhU6OTu23Tq5dpGMKQQc2i2D4CBaGrzEnOTM3cWk5ktIrphDo6X0GY7jvXt4P+5qrKQoCnbkfP8/tdNtSqlhGJvN5txPkiQMwyRJvkvSNL2Q8zxnjI3HY0VRRFGUJGk0GjHGeBwhNJvNIISmaVqWhRCK4zjLsipzEASKorTbbV3Xu92uIAi2teTHhBCnZL1e+75vl3ieV8mTyaRer/f7/eFwOBgMrq4a2pvOkwdBQAiBEG63W7cEY0wIqWSMsSzLrVar1+t1Oh3hujl9f2bpFy/bsqzVaoUQchzHLJnP51EUHWQ+G1VVZVluNhuidPPydB8at/70gRUZoT43uex5Hu9/t9tdTBuApaZpi8U8/Xykxl0EXnlRtm1jjF3XBQAQQnzfJ4TwmdWqty0O492jj3ip8hhjjLdKKYUQAgAwxr/f+eTneVHke64d1z84/YIfBeEM8hiDlAQAAAAASUVORK5CYII=&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;Certificate example&quot;
+        title=&quot;Certificate example&quot;
+        src=&quot;/static/56ffd11d3c490037a2e4fde6ae7ecd48/f058b/cert-example.png&quot;
+        srcset=&quot;/static/56ffd11d3c490037a2e4fde6ae7ecd48/c26ae/cert-example.png 158w,
+/static/56ffd11d3c490037a2e4fde6ae7ecd48/6bdcf/cert-example.png 315w,
+/static/56ffd11d3c490037a2e4fde6ae7ecd48/f058b/cert-example.png 630w,
+/static/56ffd11d3c490037a2e4fde6ae7ecd48/37523/cert-example.png 720w&quot;
+        sizes=&quot;(max-width: 630px) 100vw, 630px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+        decoding=&quot;async&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;A typical CA certificate contains information such as the subject (who issued it), for how long it is valid, a key usage (what the key is used for), a public key and a declaration of what type of algorithm that is used in the CA certificate.&lt;/p&gt;
+&lt;p&gt;Two of the most common types of algorithms used are Elliptic Curve and RSA. &lt;strong&gt;It’s important to know that CVE 2020–0601 aka. Curveball only affects Elliptic Curve certificates. RSA type CA certificates are unaffected.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Elliptic curve is a mathematical concept used in cryptology. &lt;a href=&quot;https://www.secg.org/SEC2-Ver-1.0.pdf&quot;&gt;There are many different types of mathematical curves&lt;/a&gt; that can be used when using Elliptic curve cryptography so each elliptic curve certificate must include what type of curve that was used in the specified certificate.&lt;/p&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 630px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 87.9746835443038%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAASCAIAAADUsmlHAAAACXBIWXMAAAsTAAALEwEAmpwYAAACQUlEQVQ4y3WTe3OqMBTE+/0/2Z22WrW2PkhyTggQ5RWlkvAIcAdi1c7t3Rn+/M1udg9Pl8slCAIxiTF2PB6jKBJCBJPiOP76+hr+UVVVwzA8aa2llPv9HgB2ux0ico6EUgZIKOOcHw6Hpmnatu2+1ff9FbbWFkUhpZywUR4hApj/+cHX73EYxEmaZZnWuus6a63jtdYj7DLkeS6lpJMYIt9u8GMtCWmLczcMztZOcs51XV+dT6dTGIacc0T0OaeMhYh89gwvf6QQxzhOkqQsy0dnY8zVua5rx1NKCSGEMtxu2Md7sN/1unQNPTrfY3dd50jf9wGAI1LGAgRcLWAxP4ZhnCRZmj6++V7YMAxa6zRNwzBkjAEAQxTEw/UK35dlluqqMlo3TfPf2HmeR1E0xfYoAO42bPMZUO87dt/3/SPsxh8LO5/PURRxzhljiEgIFcD46o3OXw9BECdJOsXu+/6XqYwxSqkoihARAAC58Ha4XorPdX1SjbVt0zjsBl8ul2thztn3fUopABBKfULY2wyX81RGuVJ5nhtjfok9DENZlmmaBkEwwoxNsAeLOXubXfJsLMyYuq5va1lrr843WErJJlEAQTxYr8R2Y06qapqqqh6PzFp7dXYZbg8eC6NUMIrLuff6HIdBkmaPsX/A7raVUvfbBvD3O7ZajIWdT421TVPfCvsBW2uVUmEYIqIrbO8RQQnMXtjs+SD8eFzqPpVTURRX57ZtjTFFUWRZlo9fro6HdL9VQPu6ut32o9xf9Rcyye585QrAZwAAAABJRU5ErkJggg==&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;Example curves defined in the “Standards For Efficient Cryptography”&quot;
+        title=&quot;Example curves defined in the “Standards For Efficient Cryptography”&quot;
+        src=&quot;/static/e6e7a66e5f6e5a550408fc237fb2b382/f058b/example-curves.png&quot;
+        srcset=&quot;/static/e6e7a66e5f6e5a550408fc237fb2b382/c26ae/example-curves.png 158w,
+/static/e6e7a66e5f6e5a550408fc237fb2b382/6bdcf/example-curves.png 315w,
+/static/e6e7a66e5f6e5a550408fc237fb2b382/f058b/example-curves.png 630w,
+/static/e6e7a66e5f6e5a550408fc237fb2b382/40601/example-curves.png 945w,
+/static/e6e7a66e5f6e5a550408fc237fb2b382/78612/example-curves.png 1260w,
+/static/e6e7a66e5f6e5a550408fc237fb2b382/07d7d/example-curves.png 1478w&quot;
+        sizes=&quot;(max-width: 630px) 100vw, 630px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+        decoding=&quot;async&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;Each curve is made up a series of parameters called p, a, b, G etc. and by declaring that we want a predefined curve like secp256r1, these values (p, a, b, G) will be set for us automatically, and our certificate will use that specified curve.&lt;/p&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 400px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 100.63291139240506%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAACXBIWXMAAAsTAAALEwEAmpwYAAAESklEQVQ4y4VV208cVRz+zVKpcr8vLFYEloWdMwMKiSG10tQuy54DmGJpcaUVand3ZvZy5rLLNSlpWq2JRpOWl7ahNUaJ9QXZPUMpFaOJD9r4om8++9o/AjOX3dLE6Em+ZHLmzDe/75zv9x2A/xiyqnOSqoOk6p0S1dokqoEFAReAJybwhHE8YYAwa0WEtSDCnicQcQFEnIf+yDYgYkJU+phLGQYkjZxPonq9rBqQoLrzHltEBQtlCDNRwHnOmrOHP3LTXeAgSHYAkR3wvvUEUkYOZG3ZK1GjWlazEM9k7Z/xxOScKs0AT1iT++wQHiZDrhxEdioGJrerYuoKXL06V5/U1Jr1T0Mwp6wCIoxD9hrmRYT1WLKLP3AII3mbjLerMz0Is16BmAFxnPX0hPf84dnbQx8kV2tPnr8PvpEn4JDtVCNiisF39p99b+3h0NjWof2wq0QIF5qsj/yjPwLAATc6e0ccntocDoT3fAMT+RedAzBFkbAywToU8kwhtJ/5xT41l7AFYdZhvySm53T0nueCcg3W1i41xNO52u7QfrNIWB8i7NU+vM2hIpkLeyg0DSemv/IE8UMQCOsVxwsVPeF9wLProOg5Lp3NgqwttSqaWnNqZsOuui+yCxB8CiPn7sM366J9UJadEhkVIK0rMKesWNIgGNntgpoDbib2EaT1FCQyFBQ9C6nsQnOCGlXGQgIO/gC4+/kwpPU0SFQHWdVslAhjaeOonovVnY7ebXhj6jvh0UbTkfnkcoVMtZdkVa9IpOkLST3bIVHdK1O13J7/F0hUa0xk1DKIZ/T6lJYKno/dCISid0YWl+bb4plch6zqr9igmk/RjEFZ1XlZ1dpL88/jmEQ1IZ5Rj0JSS8F8chkODgACoz90Pt5sgvnkCiQ1astQNMOS3JigRkVSUyG7GAM9J4FiS9VLsNbGLckSpUAu3vR0hn6GflLoG5zcqix77W+4KF/hFM3gUtkFUPTF1svphbrR929D1dBf0PLm7zCXXOVm4te5jJGy9pKTqMbFMxTA++5vtm0c6zAvwuyYYwPTE4pueJZWZVhcUZqurU1X1A7/WT5AtptFXGjgsQm8613esZljm8HIlt1qXZOm2wGmyBOz0nruDu3DxNwtOHPpi+7jZ78e6h3bDYiEtQuYdSLM+MDY9xxfJMTMLsrt5WIc7QA//rCcJ6aACPOL4wV/ILznP/XeveP4wi2f5cNA+LGzHhcaecIEHuehHW8Cwiag8WIvO81dIhUj21w/zle/PrFVDb1Pj1xZ+7BhaXm+8pPrU3Dy3JdWTHFuN/kQYV1uUHClbmme/smpziUVI3k7G1tP/ApnL38GkrbcGs9ka2TNyUPeCQMncTALIsJqS71cHMNvP7ArDbrE/TgP0cQNjuZUK2DbJKrXFQNWwA8OR145wkwQyCPoHfsW4P+uANdnfolq7cUroJhMAi5wrkNeFjGrt1T9AziN0F6XhB1LAAAAAElFTkSuQmCC&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;example curve&quot;
+        title=&quot;example curve&quot;
+        src=&quot;/static/ba395866b6facbfd04e1490275a99d60/e17e5/curve.png&quot;
+        srcset=&quot;/static/ba395866b6facbfd04e1490275a99d60/c26ae/curve.png 158w,
+/static/ba395866b6facbfd04e1490275a99d60/6bdcf/curve.png 315w,
+/static/ba395866b6facbfd04e1490275a99d60/e17e5/curve.png 400w&quot;
+        sizes=&quot;(max-width: 400px) 100vw, 400px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+        decoding=&quot;async&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;Sometimes you want to use a custom curve or a “not yet implemented” curve and to do so you can include all the needed parameters in the CA Certificate directly instead of defining a predefined curve.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;Curve: parameters p/a/b/G&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;When Microsoft implemented the functionality, that you can supply your own parameters to represent an elliptic curve, that’s when the vulnerability CVE 2020–0601 got introduced into Windows 10.&lt;/p&gt;
+&lt;h2&gt;Certificate Usages&lt;/h2&gt;
+&lt;p&gt;Before we can investigate how to exploit CVE 2020–0601, we need to first talk a little about how certificates are used in the real world. We are going to look at one way of using certificates to enforce trust, and that is when requesting websites.&lt;/p&gt;
+&lt;p&gt;Windows 10 provides a library applications can use to verify certificates. This library is called crypt32.dll and it is here the vulnerability was discovered. Any windows application — such as web browsers, file transfer tools or email clients — that rely on this library, to verify cryptographic signatures, may be affected by CVE 2020–0601.&lt;/p&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 630px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 36.075949367088604%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAHCAIAAACHqfpvAAAACXBIWXMAAAsTAAALEwEAmpwYAAABCUlEQVQY05WQvUrEUBBG97l8A1/A0lbEIIKFsIXVguAWusUaItYrCCI2gqAL2yxICkmpLhKNYmCTu+bn5uZO7sxoNKCFoJ5qmvPNzNfiD4gZkIj/R2taGPs67Yxf14cCzJf+PQhnAu/vdJZWiKA1ADTyrYCF0+nSebQ2FJkslCq0rvJMhI+uUmWpVIEUb23K+bnxzvbB4HDfth3H8TyvlkNpuldJeyRWL+MSDCEiEhowkNWjMcgMkxsYXcjw5SEInoLAdV3f92v580JVkVCIPz5NlHXayfKifvbTQsVRtGJZe/1+I/8GqeOjpGvJyUlpWOZ5r7d7NthgVq0/FkusiZueyGiuZu+b3wDDV4K694c+3AAAAABJRU5ErkJggg==&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;handshake example&quot;
+        title=&quot;handshake example&quot;
+        src=&quot;/static/f84145a9243c23753f3ee3f081b79109/f058b/yt1.png&quot;
+        srcset=&quot;/static/f84145a9243c23753f3ee3f081b79109/c26ae/yt1.png 158w,
+/static/f84145a9243c23753f3ee3f081b79109/6bdcf/yt1.png 315w,
+/static/f84145a9243c23753f3ee3f081b79109/f058b/yt1.png 630w,
+/static/f84145a9243c23753f3ee3f081b79109/37523/yt1.png 720w&quot;
+        sizes=&quot;(max-width: 630px) 100vw, 630px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+        decoding=&quot;async&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;A majority of trusted sites on the internet have their own signed certificate. This is used to verify that, when we request something on the internet, we get it from the actual place we requested it from. It’s to prevent things like man-in-the-middle attacks, fake websites etc.&lt;/p&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 630px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 42.405063291139236%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAICAIAAAB2/0i6AAAACXBIWXMAAAsTAAALEwEAmpwYAAABGklEQVQY052Oy0rDQBSG80I+gY/gRhTcunIjLhW68RW6ryiIi4pQInbjBSxiSSBiFCwILWiKiNBcTjKdJpnLmRmJBV3YIvgtzuLA9/+/lTJ1FRSHPbr/RLWZA6KW8vfbehzxtXa4cRHvdjPBOWcMURP4SONAohZSFpRmO5tkffX61LbP2sfNpm3bAFDJAxDbnWTrMqzdgJSVzoXMx3E5GQmJQgpWlkW7xU+Ohv2+47qe5zmOQwipZKV1ynVQmgFRWs8dPhOrOpyZtxdDs6kaRdG9/4D4HaSNQqNQqx+mNZXMup1wcYHUaxFNcjppNPZWlpeee3eEUABI0xQAKKWzm/WYcPc29w8QM2PM6/D9vFVnif/Vqv6a/V8+ASOMvVHM2egZAAAAAElFTkSuQmCC&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;sent cert&quot;
+        title=&quot;sent cert&quot;
+        src=&quot;/static/bc7bdecc79a5adc7a42f6ace2f671b65/f058b/yt2.png&quot;
+        srcset=&quot;/static/bc7bdecc79a5adc7a42f6ace2f671b65/c26ae/yt2.png 158w,
+/static/bc7bdecc79a5adc7a42f6ace2f671b65/6bdcf/yt2.png 315w,
+/static/bc7bdecc79a5adc7a42f6ace2f671b65/f058b/yt2.png 630w,
+/static/bc7bdecc79a5adc7a42f6ace2f671b65/37523/yt2.png 720w&quot;
+        sizes=&quot;(max-width: 630px) 100vw, 630px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+        decoding=&quot;async&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;Let’s say we would like to make a connection to youtube.com. As we request to connect to their website, they will first send over their own certificate (that is signed by some CA). Then they will also send over the root CA that signed their certificate (the certificate that vouches that they are who they claim to be).&lt;/p&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 630px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 44.93670886075949%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAJCAIAAAC9o5sfAAAACXBIWXMAAAsTAAALEwEAmpwYAAABUklEQVQoz42QPUvDUBSG85P0D+gfqcVJxEUXcSg4iLtDx+Igkg4WB60fKA7VQRAySG0Fo0PTpHhj89E0yb1J7jn3SowfBcH6TOcceDjvOYr8IkOBQkghPnuB8heICACIyDmXUipBgupjtKMFGy3PZblQ6GLCEQDovEEUCik55wBQzBUj4Asnw+ULZ+XSJQGlUchYQmlMDC2OxnklpX92NJqfMdaW9hqN3VqtWq2qqpplmUJiqNx4q1du+dQdUszjfqxOqYMIRcPt16R5mNxrL73eQ7vd6XS63S4AKEVCh/K2NXL8wCbEtm3DMMIwktPIZZowx3EET5OEEULMfj/LUkSYOFpIAIH5q77J5eS4QeZmw4N9P+MpY/V6vVQq60+6ZVm6rpum+dfmTLsLt9bH55shc4FD6/p2u7JInpueHw8GJiFkSmwpUYjoJ2DqScHkP3gHojDzaCBGi5EAAAAASUVORK5CYII=&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;check trust&quot;
+        title=&quot;check trust&quot;
+        src=&quot;/static/3b0e6d20057c58b0584fe9cbe5d90486/f058b/yt3.png&quot;
+        srcset=&quot;/static/3b0e6d20057c58b0584fe9cbe5d90486/c26ae/yt3.png 158w,
+/static/3b0e6d20057c58b0584fe9cbe5d90486/6bdcf/yt3.png 315w,
+/static/3b0e6d20057c58b0584fe9cbe5d90486/f058b/yt3.png 630w,
+/static/3b0e6d20057c58b0584fe9cbe5d90486/37523/yt3.png 720w&quot;
+        sizes=&quot;(max-width: 630px) 100vw, 630px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+        decoding=&quot;async&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;The browser will first verify the signature using the crypt32 library provided by Windows. Then the same library will check against an internal registry that contains many predefined trusted root CA’s, that the CA certificate youtube.com sent us is from someone whom Windows trusts.&lt;/p&gt;
+&lt;p&gt;If all verifications go well, a secure connection is established and for future requests, crypt32 in Windows will cache the sent root CA so that it can speed up subsequent requests.&lt;/p&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 630px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 36.075949367088604%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAHCAIAAACHqfpvAAAACXBIWXMAAAsTAAALEwEAmpwYAAAA70lEQVQY05WPz2rCQBDGfa0+Qd/Cd0gvKfTgvaeSSyFe2lM9SCj0UKFQemkJCipCQdEqiiQpkVSyrrvZ3ZkpS9KePOjHdxiY7zd/avQnZVABnaQaEb0uxXWP1Ts/j7M9ERm0DQP4H0IpzOdILhdCFlIIxhgAVPDtIG88zW+ev96nG6W2vOBcsmTV5ftMyN2OdB6+bc/Pvq+c5t190/c9zwuCoII/5vkwnPZfwvFwQkSAYK05oLEFIQiuRwOM1mmWxXGcJEmaphUMSi/G0YXjupeu1qq89NifbRbgodVu+Q4V0WEY0fogXA4gw47cWcK/6OiI9iMIqXIAAAAASUVORK5CYII=&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;cache cert&quot;
+        title=&quot;cache cert&quot;
+        src=&quot;/static/1e37ccf6419275189394543bc871656c/f058b/yt4.png&quot;
+        srcset=&quot;/static/1e37ccf6419275189394543bc871656c/c26ae/yt4.png 158w,
+/static/1e37ccf6419275189394543bc871656c/6bdcf/yt4.png 315w,
+/static/1e37ccf6419275189394543bc871656c/f058b/yt4.png 630w,
+/static/1e37ccf6419275189394543bc871656c/37523/yt4.png 720w&quot;
+        sizes=&quot;(max-width: 630px) 100vw, 630px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+        decoding=&quot;async&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;It is here, after caching, that a vulnerability exists that lets an attacker produce a malicious CA certificate that in turn will be trusted by Windows.&lt;/p&gt;
+&lt;h2&gt;The Vulnerability&lt;/h2&gt;
+&lt;p&gt;If we investigate how crypt32 in Windows verifies CA certificates in its cache, it goes through all cached certificates and checks if the public key in the provided CA certificate matches any of the cached CA certificates public key.&lt;/p&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 630px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 81.64556962025317%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAQCAIAAACZeshMAAAACXBIWXMAAAsTAAALEwEAmpwYAAACyUlEQVQoz3XSSW/TQBQAYH4Tv4QTy6kSF66V4MQRCXGAA4dKqCwSaiVahFBbUkpaJ03aOItdx3ZiN3EWu/bEdpLWnsRJHDuxx4OyqFCWp7nMm/dJb+bNLYxxGISGbupAn/gTFKKpH6AQ4XlEUYQxtmzLtE3H70+m3jScTMNJhGf5WxjjtnxVo5VGUS0QjMzrFyVDE82pHyw8dGG5W1pf+/Dq2euCQouXFd7gusPODIcBanLAOL/6urF79979jTfvDbFTo9QhdBdYtdUyLK+9WL9z+8Hzl0+qVzytnTWt5hyHSCnpLaGb2Ms8erhysrWqi6DOtIa9JW71ANfmcs3846ere5srUid3pvPKAiMU1RiFIlgx1wBkWT9lL1LiBSV3TVvVVKACDWpJIXFSyQhqXqqTgpjhKyeyLc9whKIq3cwfMtk4zR6XC/FiPV+XGTCwRyEKojACUCNKRJw5TPLJY5YgxRQLzm5g8oCiE1zhiCkQRS5TaRbB9Z1BD8TZOMESST5BcMSxkKZUWoFzjCNcpRXyoCglhPoBU01L1YJaozTX8RbYcPTv3I8TIcnyR5ScpQCdU/MKVJaj8gZu34SDNnQMu2/CnmH3OzCKlqOeBn4Htrq9VsfWjNkChqWOfXeBUfc8IWW2L852dW7f4GJW5RCbeTS2F3jUaMjfYlJsv51KBSw3YYs+RU00bYlh/bTFxACzD6tJX836ajZs5dDYnv8uDHk+9+5t+fO2c5p2s6Sby47SKa8mLdv+Xyz+5lCS6js7E4aZFpkxVXBpapQlfUVe4mheFYYhhD0Ie47jjH3f8/2e0+8PBo7jDC3L6V7apuk5feR5oetGQfALY4zH4zHDMFVJEnleEcRWpcplSJ7MsscpIMtmt1MWBGcwuK7/q+15dtruWFtfLj9+GhAp54CwNrc9qTE7RWhZ808c/RazLULRzfjjUX4CrPhT5nFeoH8AAAAASUVORK5CYII=&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;compare certificates&quot;
+        title=&quot;compare certificates&quot;
+        src=&quot;/static/adb8baa49ea215d570fedddd24959dc4/f058b/compare-cert.png&quot;
+        srcset=&quot;/static/adb8baa49ea215d570fedddd24959dc4/c26ae/compare-cert.png 158w,
+/static/adb8baa49ea215d570fedddd24959dc4/6bdcf/compare-cert.png 315w,
+/static/adb8baa49ea215d570fedddd24959dc4/f058b/compare-cert.png 630w,
+/static/adb8baa49ea215d570fedddd24959dc4/30d16/compare-cert.png 672w&quot;
+        sizes=&quot;(max-width: 630px) 100vw, 630px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+        decoding=&quot;async&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;What it on the other hand doesn’t do is verifying that both certificates are using the same type of curve. If we manage to guess the curve and the private key, we can successfully produce a fake CA certificate that we can use to sign other certificates and it is game over.&lt;/p&gt;
+&lt;p&gt;But before we can produce a fake CA certificate we need to know a bit more about Elliptic Curve cryptology.&lt;/p&gt;
+&lt;h2&gt;Elliptic Curve Basics&lt;/h2&gt;
+&lt;p&gt;So, what is Elliptic curve cryptography, or ECC for short? It a type of cryptology in a category called asymmetric cryptology. In asymmetric cryptology you have a Public Key and Private Key. The public key can be exposed publicly, and anyone can use it to encrypt things. But the private key is the only thing that can decrypt whatever was encrypted with that particular public key.&lt;/p&gt;
+&lt;p&gt;It’s very common that you share and store the public key widely across the Internet so that if someone needs to communicate encrypted with you, they can use your public key and then only you with the matching private key will be able to decrypt the message (Quite good right?).&lt;/p&gt;
+&lt;p&gt;Well we talked a bit before about a set of predefined elliptic curves that you can choose from when generating a CA certificate. These curves are built up by a set of predefined values called P, a, b etc. If we define these values in a specific formula, we get an elliptic curve.&lt;/p&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 400px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 100.63291139240506%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAACXBIWXMAAAsTAAALEwEAmpwYAAAESklEQVQ4y4VV208cVRz+zVKpcr8vLFYEloWdMwMKiSG10tQuy54DmGJpcaUVand3ZvZy5rLLNSlpWq2JRpOWl7ahNUaJ9QXZPUMpFaOJD9r4om8++9o/AjOX3dLE6Em+ZHLmzDe/75zv9x2A/xiyqnOSqoOk6p0S1dokqoEFAReAJybwhHE8YYAwa0WEtSDCnicQcQFEnIf+yDYgYkJU+phLGQYkjZxPonq9rBqQoLrzHltEBQtlCDNRwHnOmrOHP3LTXeAgSHYAkR3wvvUEUkYOZG3ZK1GjWlazEM9k7Z/xxOScKs0AT1iT++wQHiZDrhxEdioGJrerYuoKXL06V5/U1Jr1T0Mwp6wCIoxD9hrmRYT1WLKLP3AII3mbjLerMz0Is16BmAFxnPX0hPf84dnbQx8kV2tPnr8PvpEn4JDtVCNiisF39p99b+3h0NjWof2wq0QIF5qsj/yjPwLAATc6e0ccntocDoT3fAMT+RedAzBFkbAywToU8kwhtJ/5xT41l7AFYdZhvySm53T0nueCcg3W1i41xNO52u7QfrNIWB8i7NU+vM2hIpkLeyg0DSemv/IE8UMQCOsVxwsVPeF9wLProOg5Lp3NgqwttSqaWnNqZsOuui+yCxB8CiPn7sM366J9UJadEhkVIK0rMKesWNIgGNntgpoDbib2EaT1FCQyFBQ9C6nsQnOCGlXGQgIO/gC4+/kwpPU0SFQHWdVslAhjaeOonovVnY7ebXhj6jvh0UbTkfnkcoVMtZdkVa9IpOkLST3bIVHdK1O13J7/F0hUa0xk1DKIZ/T6lJYKno/dCISid0YWl+bb4plch6zqr9igmk/RjEFZ1XlZ1dpL88/jmEQ1IZ5Rj0JSS8F8chkODgACoz90Pt5sgvnkCiQ1astQNMOS3JigRkVSUyG7GAM9J4FiS9VLsNbGLckSpUAu3vR0hn6GflLoG5zcqix77W+4KF/hFM3gUtkFUPTF1svphbrR929D1dBf0PLm7zCXXOVm4te5jJGy9pKTqMbFMxTA++5vtm0c6zAvwuyYYwPTE4pueJZWZVhcUZqurU1X1A7/WT5AtptFXGjgsQm8613esZljm8HIlt1qXZOm2wGmyBOz0nruDu3DxNwtOHPpi+7jZ78e6h3bDYiEtQuYdSLM+MDY9xxfJMTMLsrt5WIc7QA//rCcJ6aACPOL4wV/ILznP/XeveP4wi2f5cNA+LGzHhcaecIEHuehHW8Cwiag8WIvO81dIhUj21w/zle/PrFVDb1Pj1xZ+7BhaXm+8pPrU3Dy3JdWTHFuN/kQYV1uUHClbmme/smpziUVI3k7G1tP/ApnL38GkrbcGs9ka2TNyUPeCQMncTALIsJqS71cHMNvP7ArDbrE/TgP0cQNjuZUK2DbJKrXFQNWwA8OR145wkwQyCPoHfsW4P+uANdnfolq7cUroJhMAi5wrkNeFjGrt1T9AziN0F6XhB1LAAAAAElFTkSuQmCC&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;elliptic curve example&quot;
+        title=&quot;elliptic curve example&quot;
+        src=&quot;/static/ba395866b6facbfd04e1490275a99d60/e17e5/curve.png&quot;
+        srcset=&quot;/static/ba395866b6facbfd04e1490275a99d60/c26ae/curve.png 158w,
+/static/ba395866b6facbfd04e1490275a99d60/6bdcf/curve.png 315w,
+/static/ba395866b6facbfd04e1490275a99d60/e17e5/curve.png 400w&quot;
+        sizes=&quot;(max-width: 400px) 100vw, 400px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+        decoding=&quot;async&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;To start generating a public and private key from this curve we first need to define a starting point on the curve, we can call this starting point G (the generator). From this starting point we then start jumping around on the graph “n” number of times.&lt;/p&gt;
+&lt;div style=&quot;display: flex; justify-content: center;&quot;&gt;
+  &lt;div style=&quot;width: 400px; 
+  margin: 0 1rem;
+    margin-bottom : 1.5rem;&quot;&gt;
+      &lt;span class=&quot;gatsby-resp-image-wrapper&quot; style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 350px; &quot;&gt;
+      &lt;span class=&quot;gatsby-resp-image-background-image&quot; style=&quot;padding-bottom: 100%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAIAAAAC64paAAAACXBIWXMAAAsTAAALEwEAmpwYAAAChUlEQVQ4y4VUW1PaUBDmj/aPdPrSp9bpU1/70OnUTiszjgVtUVTEIGCRi0FChUguhxCSSK4kJBCSsx2Iw6WK7sNO9pz9zpfZ3W9j8JRhjAGApmlZlhdhdAGLb4DYM2Ce5zVdX4RhOPOe2J8MBlHSc2COR4ZhrDKHvm+UStj3n2aO8iIvCkhVtXbfITljYHkX7HB7v+xL0iIh9h8UAALLROi+zg9/ZhuHpJgi709ulJrk1evCp50vg8CeJT5mxhgPqaZNkjKvfL/8++rNR7FMRjdTWweqmenkKj3qEfM8sCnKRSg6UMbK+/QxdUlBs1EgsrWLcwggw5caMr0Eh2GIwxAAprZt1mqzqgRTHOBruXlUOU1cCQBAMKUUWwSA406+IbXnlZ9ZbEHrIeSvdLXYJ3NUroU0qu8jSzhhZuAs/6elsktmmqZ5jutK0h1BsI0G6vUQ4hGPErX013ScbbeS+U6iWowXE7Igxa8OiHqxL4gsyzIME5MkSVNV03HEcvme4wzL0nVdU7XTVn43l5SEnqo5Hw7Pf92cOqZzfJsTFNEyLVVVZVle+W1BGPd6D0XHkO9V0teZ0dABgHSn/aNOAEBBqFrj4bJVi+kJPM+sVqNiAAbW6J7UzkaOCwCNDrmVObNcuBQq5gN4xrDWKoemnXY7eowyue3CXidfS+5k38Ur2X3iW6qdYav2ZMOQRHiTJN1W64w4eLv7+/PedeHOsH3A3ugwUdrKpMYPE7ZpPF13oqng+izbVXRz0RhvNH29nzQnzkbmSLFRNkIrqsIwhZC9bblI2CCMdW2hbtcwl8wYcBBMzaty4HkvLwOO4zRNW+p57ieq6s8PX1gGDMMoirK2htbtH9mqX7QtoBmCAAAAAElFTkSuQmCC&apos;); background-size: cover; display: block;&quot;&gt;&lt;/span&gt;
+  &lt;img class=&quot;gatsby-resp-image-image&quot; alt=&quot;elliptic curve movement&quot; title=&quot;elliptic curve movement&quot; src=&quot;/static/6466c7be20c67da3cba29658b490f37b/13ae7/elliptic-curve-movement.png&quot; srcset=&quot;/static/6466c7be20c67da3cba29658b490f37b/c26ae/elliptic-curve-movement.png 158w,
+/static/6466c7be20c67da3cba29658b490f37b/6bdcf/elliptic-curve-movement.png 315w,
+/static/6466c7be20c67da3cba29658b490f37b/13ae7/elliptic-curve-movement.png 350w&quot; sizes=&quot;(max-width: 350px) 100vw, 350px&quot; style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot;&gt;
+    &lt;/span&gt;
+  &lt;/div&gt;
+  &lt;div style=&quot;width: 400px; 
+  margin: 0 1rem;
+    margin-bottom : 1.5rem;&quot;&gt;
+      &lt;span class=&quot;gatsby-resp-image-wrapper&quot; style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 350px; &quot;&gt;
+      &lt;span class=&quot;gatsby-resp-image-background-image&quot; style=&quot;padding-bottom: 100%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAIAAAAC64paAAAACXBIWXMAAAsTAAALEwEAmpwYAAACtElEQVQ4y01SiZLrOAj0/3/jmz0mk3mJLVsSh5A4nC05U7tLUTY2Qt00LOu2FSD+nxELMyNSI9rScVRujRszkFT890zLwMu6rsPcIs7zjAiL8IgzQv0klm3bxjt3nuYhNkP1OF8vbm1JKZmZu0e4+fS3mTlx2/ddzdVd1NWiDTOP6XES87Jt2yyOeJepzTI1D3duLaXk7sNimKPYMO/qIGZxMvMPsprL+AHW+Tnjq3jrajupqEdEv1i0Ya/XaxbnnFUtIvwqHfbDOSLaf8iTy0TWiVwv5NZ4OY5D9UJye9sb/+pZjn0fOtnKmFdcPV+t+Ul0IYu6/4gd6lPtKzi5SUpp2ExGnB6nTOXjrXZrbdn3vVzjI2IkRsRSEYkqACGmo2wZ3rMtQLkiciMiJE65LiKti7T2XgSutcJltRYmEpk5pmlMhIg0YZAIAXHJpR7ALB1Y5q1t9N5bE2QhGRXwAM4oxFKoF2qV2g6SoFGTZUtpLyjq0EYf2odR1yeMHeeSllr/epZbHh9J7rl/5b7CuGX5SPLMtJRSmNnjNHfqzt1E7YwYw5AZAf58loP9K48NxxP0XkZpeivjvtOCiBlIPVD08msYPokgNwS4bfBddUXdyWrTB4yd7Ak9V1wAptSv16nmZ4Sof1ctzVpXmvrBr0ep4rnZRxr3MkB8BU00gGiptRQgj5MmYadu3K0NJ1G+kD+3+gBbUb+r7qQH24rjAb0ALXMsOGl3naxQ1Nxfr2h9ADEh/L3WnW1KSJpZv3KvYo/aHxmXOVhki1dX7xZ9gnsRr03n/Jn/eNbfGL/SeIDeqz7Bnmgf+/jOvFSgx16oSapckZHnvqRCKUOlJn3c1nzf6Xng78z3HbeCnxt8bpAKLGMMQKxzpa4H4HyXkvNRah1jcGuIc1WPXMr8n4/jOHJet/QPS6R+OTdYN5UAAAAASUVORK5CYII=&apos;); background-size: cover; display: block;&quot;&gt;&lt;/span&gt;
+  &lt;img class=&quot;gatsby-resp-image-image&quot; alt=&quot;elliptic curve dots&quot; title=&quot;elliptic curve dots&quot; src=&quot;/static/8c19bb8190d069c2b57e9acdc3cd8307/13ae7/elliptic-curve-dots.png&quot; srcset=&quot;/static/8c19bb8190d069c2b57e9acdc3cd8307/c26ae/elliptic-curve-dots.png 158w,
+/static/8c19bb8190d069c2b57e9acdc3cd8307/6bdcf/elliptic-curve-dots.png 315w,
+/static/8c19bb8190d069c2b57e9acdc3cd8307/13ae7/elliptic-curve-dots.png 350w&quot; sizes=&quot;(max-width: 350px) 100vw, 350px&quot; style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot;&gt;
+    &lt;/span&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+I’m not going to explain how we jump around on the curve because it’s quite complicated and there is an entire wiki page describing just this so we will leave that out for now. But what you should know is that by jumping around millions, or even billions of times on the curve will result in a series of dots (when you remove the curve) and this will end up as a very large factor. Let’s call this factor “x”. In the end we end up with a simple formula x * G (starting point multiplied by our factor).
+&lt;p&gt;This formula will be equal something so let’s add that to, so we end up with something like:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;./maffs/maffs1.png&quot; alt=&quot;curve equation&quot;&gt;&lt;/p&gt;
+&lt;p&gt;Where G is our starting point on the graph, x is the result of us jumping around, and the product is Q.&lt;/p&gt;
+&lt;p&gt;When defined, x in this formula is our private key and Q our public key. And as mentioned before our public key we can send to anyone, but how we got the result (x and G) is our “secret sauce” that no one can know anything about.&lt;/p&gt;
+&lt;p&gt;Trying to derive the key by flipping the formula is what is known as the Discrete Logarithm Problem and is known to be a very difficult problem so that is not a possibility when trying to reverse engineer the private key.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;./maffs/maffs2.png&quot; alt=&quot;discrete logarithmic problem&quot;&gt;&lt;/p&gt;
+&lt;p&gt;So, for the time being this feels pretty secure, right?&lt;/p&gt;
+&lt;h2&gt;CVE 2020–0601&lt;/h2&gt;
+&lt;p&gt;With this knowledge as a prerequisite this is where CVE 2020–0601 comes into play. Since Windows does not verify the curve provided in the certificates, we can provide these parameters and create a malicious certificate based on this simple math.&lt;/p&gt;
+&lt;p&gt;Since we can control the parameters, how about we set the private key to something like 20, or 100 or just something simple…. like the number 1?&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;./maffs/maffs3.png&quot; alt=&quot;breaking the maths&quot;&gt;&lt;/p&gt;
+&lt;p&gt;This will result in our public key being equal to our starting point on the graph, and just like that we have the two secrets parameters, just from knowing the public key!&lt;/p&gt;
+&lt;p&gt;With all this information we can now forge any Elliptic Curve certificate just by acquiring the public key. Here’s an example. We acquire a public key say 1234 and we put this into our formula:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;./maffs/maffs4.png&quot; alt=&quot;breaking the maths&quot;&gt;&lt;/p&gt;
+&lt;p&gt;And by using this information, we can then generate a valid CA certificate that we control!&lt;/p&gt;
+&lt;p&gt;So to recap:&lt;/p&gt;
+&lt;p&gt;Just by acquiring the public key from any source we can then generate a fully valid malicious CA certificate that we can use to sign any other certificate. This certificate will then be trusted by Windows 10 because it will pass the check against it’s certificate cache.&lt;/p&gt;
+&lt;h2&gt;Ollypwn’s Proof Of Concept&lt;/h2&gt;
+&lt;p&gt;Oliver Lyak demonstrates this in a Github repository how to exploit the vulnerability by generating a false CA certificate and then proceeds to demonstrate how it can be used to sign other certificates, or sign code as “trusted”.&lt;/p&gt;
+&lt;p&gt;The code below is taken from his example.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;ruby&quot;&gt;&lt;pre class=&quot;language-ruby&quot;&gt;&lt;code class=&quot;language-ruby&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;require&lt;/span&gt; ‘openssl’
+
+&lt;span class=&quot;token comment&quot;&gt;# Read file provided in the first argument&lt;/span&gt;
+raw &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;File&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;read &lt;span class=&quot;token constant&quot;&gt;ARGV&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;
+
+&lt;span class=&quot;token comment&quot;&gt;# Parse the file as a certificate&lt;/span&gt;
+ca &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; OpenSSL&lt;span class=&quot;token double-colon punctuation&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;token constant&quot;&gt;X509&lt;/span&gt;&lt;span class=&quot;token double-colon punctuation&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;token class-name&quot;&gt;Certificate&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token keyword&quot;&gt;new&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;raw&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;token comment&quot;&gt;# Extract the public keyca_key = ca.public_key# Set a private key to 1&lt;/span&gt;
+ca_key&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;private_key &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;1&lt;/span&gt;
+
+&lt;span class=&quot;token comment&quot;&gt;# Get the group parameters that contains the curve&lt;/span&gt;
+group &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; ca_key&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;group
+
+&lt;span class=&quot;token comment&quot;&gt;# Set the generator parameters (G in our formula) to the public key&lt;/span&gt;
+group&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;set_generator&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;ca_key&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;public_key&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; group&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;order&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; group&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;cofactor&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;token comment&quot;&gt;# Ensure we are sending explicit parameters and not a predefined curve&lt;/span&gt;
+group&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;asn1_flag &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; OpenSSL&lt;span class=&quot;token double-colon punctuation&quot;&gt;::&lt;/span&gt;PKey&lt;span class=&quot;token double-colon punctuation&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;token constant&quot;&gt;EC&lt;/span&gt;&lt;span class=&quot;token double-colon punctuation&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;token constant&quot;&gt;EXPLICIT_CURVE&lt;/span&gt;
+
+&lt;span class=&quot;token comment&quot;&gt;# Set our new group with our fake generator G’ = Q&lt;/span&gt;
+ca_key&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;group &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; group
+
+&lt;span class=&quot;token comment&quot;&gt;# Save this to a file as our new CA&lt;/span&gt;
+&lt;span class=&quot;token builtin&quot;&gt;File&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;open&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;“spoofed_ca&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;key”&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; ‘w’&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;f&lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt; f&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;write ca_key&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;to_pem &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;It first reads in a predefined CA certificate, for example the MicrosoftECCProductRootCertificateAuthority.cer which is the official certificate Microsoft uses to sign many things with.&lt;/p&gt;
+&lt;p&gt;Then it reads out the public key from it and then defines at sets some new custom parameters, generator etc. We can see that the code explicitly sets the private key to 1 and then save it to a new spoofed CA certificate that can be used to sign code or other certificates.&lt;/p&gt;
+&lt;p&gt;This newly generated certificate can be used to act like microsoft and sign other certificates. We essentially can claim that we are Microsoft and vouch for anyone. Extremely powerful.&lt;/p&gt;
+&lt;p&gt;Ollypwn then continues to demonstrate how to sign some code as “trusted by Microsoft” and also how to generate a website certificate claiming to be issued by &lt;a href=&quot;http://www.google.com&quot;&gt;www.google.com&lt;/a&gt; and then sign this certificate with the crafted “Microsoft” certificate.&lt;/p&gt;
+&lt;p&gt;What this all boils down to is that by exploiting CVE 2020–0601 we can claim that we are anyone, and we can vouch for anyone on the internet.&lt;/p&gt;
+&lt;p&gt;This in turn can be used to pass firewalls, push fake updates containing malware to any Windows 10 machine claiming we are “Microsoft”. We can for example set up fake websites claiming that we are any of the big companies and we can also develop malicious programs that windows 10 just blindly will trust as “safe software”.&lt;/p&gt;
+&lt;p&gt;The possibilities are endless, only creativity will stop you and the hackers out there.&lt;/p&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 438px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 72.78481012658227%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAPCAIAAABr+ngCAAAACXBIWXMAAAsTAAALEwEAmpwYAAAC1UlEQVQoz6WTXUxSYRjHvei+i+7qoptq68L8qFGDJepamiH4sVBpNnRM5so0W+YQS6ZzJKSt8qsPy+a3nkMgR7EwDUshKsSAzNDCUkTDw5dKk3Pedg7m1K2r/nsv3r3b73me7f09IeAfwXEcI7N5CSYQCAQfAQAh4D+yDcYBwHCwjhFVbTab+qUaQRCz2azRaORyuUqlMhgMEAQplYj1q5WAMZwAyCk2gmEYAMBisQy9ftWLKMxm8/DwcFdXd39fv17//nHTo26o02QybeuMA4CuYVZ0ffTn6ot50KsakxbW2Wd+2b7bILinrr62o6NtZmba7Vi5L2yWd/QRsOaHv97gKR1Bn5l8WX1LDMhBb52Pk7laBrSU3akn9rCoFFpaApeXUsBh8E5So6l7GUd2sbo7ZQR8We2ktdij2+1VOlcSvBjf5WD0LJyFUfOCm8c+c2hfhCCzWpL15Da3Wcp9WsFriDhApYTTl9FlAi4dQRMhBwt23P3gzuhdSoIdTNjJk5tm9bmfumgKSUbRaXF5Yr2Y/aAypVGYUMMOy2Mncci/BCFNE16hBi1741JYV2v0boluWaxfR8ba13THSrj0oXrmdTaTEZbVmNd+ISY3MTSdH1oWE8p0ecnOQg3K6HGwILKzYikZtsdCfniw0jsS6dTFerQMaXbJwf1hnWIk/PDRK8xSQdS9hMh0tw8l4PxBJ63VHtVmv6V1JcEL9G5fheL5IhKDjl+dRDgNXL4gtbq8QKJu0kmLa0XZ0txw0bWcm8TYGB4yOud/aPSK3qLtFk/2gE8gU07K4gRtHVYPcNjn0iiFuceFOefy+JkX+ZxLBafKzkfkG40TQR22GIZjngDwflPaptR9s8C54gcAWKemRdw7RfFVxcliQaL0RnrNR52RJPENwwLk2SoZqQwI2u//7f9stGpV46Z3X3w+36aCO90mPcVwHCNq/VUVx/Adq7a5GH8A3SWwCZSuEmQAAAAASUVORK5CYII=&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;summary&quot;
+        title=&quot;summary&quot;
+        src=&quot;/static/42fc74204812244be63f4b6dcd477123/50e4b/summary.png&quot;
+        srcset=&quot;/static/42fc74204812244be63f4b6dcd477123/c26ae/summary.png 158w,
+/static/42fc74204812244be63f4b6dcd477123/6bdcf/summary.png 315w,
+/static/42fc74204812244be63f4b6dcd477123/50e4b/summary.png 438w&quot;
+        sizes=&quot;(max-width: 438px) 100vw, 438px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+        decoding=&quot;async&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;h2&gt;Summary&lt;/h2&gt;
+&lt;p&gt;This has been a high-level breakdown of CVE 2020–0601 in the Microsoft crypto API that got disclosed to the world on the 14th of January 2020. This text has tried to demonstrate how a simple miss in validation can have a huge impact on the security of the Internet.&lt;/p&gt;
+&lt;p&gt;This post has also tried to show how this vulnerability can be exploited to generate malicious CA certificates, that in turn can be used to circumvent a lot of security features, like firewalls, website traffic etc.&lt;/p&gt;
+&lt;p&gt;Final last words are, always patch your systems… Always&lt;/p&gt;
+&lt;h2&gt;Appendix&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&quot;https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-0601&quot;&gt;https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-0601&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://portal.msrc.microsoft.com/en-US/security-guidance/advisory/CVE-2020-0601&quot;&gt;https://portal.msrc.microsoft.com/en-US/security-guidance/advisory/CVE-2020-0601&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://krebsonsecurity.com/2020/01/cryptic-rumblings-ahead-of-first-2020-patch-tuesday/&quot;&gt;https://krebsonsecurity.com/2020/01/cryptic-rumblings-ahead-of-first-2020-patch-tuesday/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://twitter.com/saleemrash1d/status/1217495681230954506&quot;&gt;https://twitter.com/saleemrash1d/status/1217495681230954506&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://github.com/ollypwn/CurveBall&quot;&gt;https://github.com/ollypwn/CurveBall&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://www.secg.org/SEC2-Ver-1.0.pdf&quot;&gt;https://www.secg.org/SEC2-Ver-1.0.pdf&lt;/a&gt;&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Hello World]]></title><description><![CDATA[This is my first post on my new fake blog! How exciting! I’m sure I’ll write a lot more interesting things in the future. Oh, and here’s a…]]></description><link>https://blog.toerktumlare.com/hello-world/</link><guid isPermaLink="false">https://blog.toerktumlare.com/hello-world/</guid><pubDate>Fri, 01 May 2015 22:12:03 GMT</pubDate><content:encoded>&lt;p&gt;This is my first post on my new fake blog! How exciting!&lt;/p&gt;
 &lt;p&gt;I’m sure I’ll write a lot more interesting things in the future.&lt;/p&gt;
 &lt;p&gt;Oh, and here’s a great quote from this Wikipedia on
 &lt;a href=&quot;https://en.wikipedia.org/wiki/Salted_duck_egg&quot;&gt;salted duck eggs&lt;/a&gt;.&lt;/p&gt;
