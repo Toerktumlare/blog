@@ -1,4 +1,4 @@
-# Blog
+ Blog
 This repository contains the blog for blog.toerktumlare.com
 
 ## TODO's
@@ -32,7 +32,7 @@ This repository contains the blog for blog.toerktumlare.com
  - [ ] fix dates in blog list and blog posts
 
 ## Move old posts
- - [ ] move CVE 2020-0601
+ - [x] move CVE 2020-0601
  - [ ] move "Write a monad in java"
  - [ ] move "Spring security + JWT"
 
