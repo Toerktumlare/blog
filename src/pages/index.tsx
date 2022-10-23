@@ -87,6 +87,7 @@ export const GlobalStyle = createGlobalStyle`
 
   h2 {
     margin-top: 150px;
+    margin-bottom: 20px;
     font-size: 36px;
   }
 `
