@@ -8,20 +8,16 @@ const Header: React.FC = () => {
     <header className="terminal-nav">
       <div className="terminal-logo">
         <div className="logo terminal-prompt">
-          <a className="no-style" href={siteMetadata.author.name}>
-            Without followers, evil cannot spread
-          </a>
+          <Link className="menu-item" to="/">Without followers, evil cannot spread</Link>
         </div>
       </div>
       <nav className="terminal-menu">
         <ul>
           <li>
-            <a className="menu-item" href="#">
-              home
-            </a>
+            <Link className="menu-item" to="/">home</Link>
           </li>
           <li>
-            <Link className="menu-item" to="about">about</Link>
+            <Link className="menu-item" to="/about">about</Link>
           </li>
         </ul>
       </nav>

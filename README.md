@@ -16,9 +16,9 @@ This repository contains the blog for blog.toerktumlare.com
 - [ ] rewrite gatsby node to proper typescript
 - [ ] rewrite all css to styled component
 - [ ] change from using markdown, to use mdx
-- [ ] make sure home button works
+- [x] make sure home button works
 - [ ] fix main header link in both test and prod
-- [ ] implement tags on blog posts (frontmatter)
+- [x] implement tags on blog posts (frontmatter)
 
 ## CSS changes:
  - [x] next/previous blog post little larger font
@@ -29,3 +29,10 @@ This repository contains the blog for blog.toerktumlare.com
  - [ ] style a warning component
  - [x] larger h1
  - [ ] add different colors depending on tag
+ - [ ] fix dates in blog list and blog posts
+
+## Move old posts
+ - [ ] move CVE 2020-0601
+ - [ ] move "Write a monad in java"
+ - [ ] move "Spring security + JWT"
+
