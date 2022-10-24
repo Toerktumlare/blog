@@ -2,6 +2,7 @@ import { StaticImage } from "gatsby-plugin-image"
 import React from "react"
 import styled from "styled-components"
 import Layout from "../components/layout"
+import StackOverflow from "../components/StackOverflow"
 
 const AboutWrapper = styled.div`
     display: flex;
@@ -11,11 +12,13 @@ const AboutWrapper = styled.div`
 `
 
 const BioWrapper = styled.div`
-  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
 `
 
-const Text = styled.p`
-  
+const StackOverFlowWrapper = styled.div`
+  display: flex;
+  padding-top: 30px;
 `
 
 const About = () => {
@@ -24,15 +27,18 @@ const About = () => {
       <AboutWrapper>
         <StaticImage src="../images/city.jpg" alt="A city" width={2000} imgStyle={{ borderRadius: 10}} />
         <BioWrapper>
-          <Text>
+          <p>
             Coder by day, coder by night.
-          </Text>
-          <Text>
+          </p>
+          <p>
             +10 years development experience. I work
             at one of Scandinavia's leading software security companies. I'm a
             mediocre programmer that likes to understand how things work. Here i
             will mostly write about things i find interesting.
-          </Text>
+          </p>
+          <StackOverFlowWrapper>
+            <StackOverflow />
+          </StackOverFlowWrapper>
         </BioWrapper>
       </AboutWrapper>
     </Layout>

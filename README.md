@@ -2,7 +2,6 @@
 This repository contains the blog for blog.toerktumlare.com
 
 ## TODO's
-
 - [x] set up repository and push repo
 - [x] push production build to gh-branch
 - [x] configure github-pages
@@ -19,6 +18,7 @@ This repository contains the blog for blog.toerktumlare.com
 - [x] make sure home button works
 - [x] fix main header link in both test and prod
 - [x] implement tags on blog posts (frontmatter)
+- [x] add stack overflow flare
 
 ## CSS changes:
  - [x] next/previous blog post little larger font
@@ -29,10 +29,10 @@ This repository contains the blog for blog.toerktumlare.com
  - [ ] style a warning component
  - [x] larger h1
  - [ ] add different colors depending on tag
- - [ ] fix dates in blog list and blog posts
+ - [x] fix dates in blog list and blog posts
 
 ## Move old posts
  - [x] move CVE 2020-0601
- - [ ] move "Write a monad in java"
+ - [x] move "Write a monad in java"
  - [ ] move "Spring security + JWT"
 

@@ -7,6 +7,7 @@ import { createGlobalStyle } from "styled-components"
 import MajorHeading from "../elements/MajorHeading"
 import Tag from "../elements/Tag"
 import TagSection from "../components/tagSection"
+import SmallDate from "../elements/SmallDate"
 
 export const GlobalStyle = createGlobalStyle`
   :root {
@@ -82,13 +83,21 @@ export const GlobalStyle = createGlobalStyle`
   }
   
   h1 {
+    display: block;
+    margin-top: 150px;
     font-size: 46px;
+    margin-bottom: 5px;
   }
 
   h2 {
     margin-top: 150px;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
     font-size: 36px;
+  }
+
+  p span {
+    margin-top: 30px !important;
+    margin-bottom: 30px !important;
   }
 `
 
@@ -116,7 +125,7 @@ const BlogIndex = ({ data, location }: PageProps<Queries.IndexPageQuery>) => {
                       <span itemProp="headline">{title}</span>
                     </Link>
                   </MajorHeading>
-                  <small>{post.frontmatter.date}</small>
+                  <SmallDate>{post.frontmatter.date}</SmallDate>
                   <section>
                     <p
                       dangerouslySetInnerHTML={{
