@@ -19,6 +19,7 @@ This repository contains the blog for blog.toerktumlare.com
 - [x] fix main header link in both test and prod
 - [x] implement tags on blog posts (frontmatter)
 - [x] add stack overflow flare
+- [ ] change font to Ubuntu Mono (google fonts)
 
 ## CSS changes:
  - [x] next/previous blog post little larger font
