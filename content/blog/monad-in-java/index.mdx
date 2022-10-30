@@ -37,9 +37,9 @@ And if you look at the picture and think a little you will notice that we have m
 
 With this information can you think of a Monad in Java?
 
-## Optional<T>.java
+## Optional{'<T>'}.java
 
-_Optional<T>_ in java is indeed a Monad!
+_Optional{'<T>'}_ in java is indeed a Monad!
 
 It takes a value and returns a new object of the Optional type. Then we can perform computations on the internal value and it returns an Optional containing our new value!
 
@@ -50,7 +50,7 @@ Optional<String> value = Optional.of("Hello world")
 
 Here we give it a string, we perform a computation using a lambda expression and we return a new object (of type Optional) containing our new value.
 
-## Streams<T>
+## Streams{'<T>'}
 
 Is another example of a Monad. But this time we can give it multiple values. We then perform some sort of computation on the multiple values and are given a new object of type Stream, containing our computed values.
 
@@ -59,7 +59,7 @@ Stream<String> values = Stream.of("Hello", "World")
     .map(s -> s.toUpperCase());
 ```
 
-## CompletableFuture<T>
+## CompletableFuture{'<T>'}
 
 Is the newest addition to Monads in java. Unlike Optional and Streams that take values, CompletableFuture takes an async operation and returns a new object of the type CompletableFuture.
 
@@ -77,11 +77,12 @@ Often in code you will see the use of try/catch blocks to handle errors.
 
 Sometimes we even nest try/catch blocks in other try/catch blocks. This is usually pretty ugly and sometimes we end up catching everything in a big giant try catch/block.
 
-The Optional<T> type can help us figure out if there is concrete value in a variable. Maybe we can leverage a Monad to tell us if there has been an exception thrown or not, just like a try/catch block?
+The Optional{'<T>'} type can help us figure out if there is concrete value in a variable. Maybe we can leverage a Monad to tell us if there has been an exception thrown or not, just like a try/catch block?
 
 ```java
 //Our old way..
-int value = null;try {
+int value = null;
+try {
     value = Integer.valueOf("10");
 } catch(NumberFormatException e){
     value = 10;
@@ -245,7 +246,7 @@ public abstract <U> Try<U> flatMap(Function<? super T, Try<U> f);
 
 This flatMap function will return a `Try.class` for us. But the most complicated here must be its input.
 
-## Function<? super T, ? extends U>
+## Function{`<`}? super T, ? extends U{`>`}
 
 When we pass a function to a function we need to use the functional interfaces in java and we need to declare what types this function will take.
 
@@ -321,7 +322,7 @@ First we can try to perform a computation that might fail and we are now returne
 Try<Integer> value = Try.ofThrowable(() -> Integer.valueOf("1"));
 ```
 
-We can parse a simple string and get the value, but remember this might fail when we call get, exactly like an Optional<T>.class
+We can parse a simple string and get the value, but remember this might fail when we call get, exactly like an `Optional<T>`.class
 
 ```java
 int value = Try.ofThrowable(() -> Integer.valueOf("1")).get();

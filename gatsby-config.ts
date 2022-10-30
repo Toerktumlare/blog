@@ -34,9 +34,10 @@ const config: GatsbyConfig = {
       },
     },
     {
-      resolve: `gatsby-transformer-remark`,
+      resolve: `gatsby-plugin-mdx`,
       options: {
-        plugins: [
+        extensions: [`.md`, `.mdx`],
+        gatsbyRemarkPlugins: [
           {
             resolve: `gatsby-remark-images`,
             options: {
@@ -55,12 +56,6 @@ const config: GatsbyConfig = {
               // this is the language in your code-block that triggers mermaid parsing
               language: 'mermaid', // default
               theme: 'dark' // could also be dark, forest, or neutral
-            }
-          },
-          {
-            resolve: `gatsby-remark-prismjs`,
-            options: {
-              inlineCodeMarker: ","
             }
           },
           `gatsby-remark-copy-linked-files`,
@@ -88,8 +83,8 @@ const config: GatsbyConfig = {
         `,
         feeds: [
           {
-            serialize: ({ query: { site, allMarkdownRemark } }: any) => {
-              return allMarkdownRemark.nodes.map((node: any) => {
+            serialize: ({ query: { site, allMdx } }: any) => {
+              return allMdx.nodes.map((node: any) => {
                 return Object.assign({}, node.frontmatter, {
                   description: node.excerpt,
                   date: node.frontmatter.date,
@@ -101,7 +96,7 @@ const config: GatsbyConfig = {
             },
             query: `
               {
-                allMarkdownRemark(
+                allMdx(
                   sort: { order: DESC, fields: [frontmatter___date] },
                 ) {
                   nodes {

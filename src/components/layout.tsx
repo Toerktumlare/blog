@@ -3,6 +3,8 @@ import Header from "./header"
 import styled from "styled-components"
 import { GlobalStyle } from "../pages";
 import Footer from "./footer";
+import { MDXProvider } from '@mdx-js/react'
+import CodeBlock from './codeBlock'
 
 const Wrapper = styled.div`
   margin: 0 auto;
@@ -11,17 +13,21 @@ const Wrapper = styled.div`
   color: var(--font-color);
 `;
 
+const components = {
+  pre: CodeBlock
+}
+
 const Layout = ({ children }: any) => {
 
   return (
-    <>
-    <Wrapper>
-      <GlobalStyle />
-      <Header />
-      <main>{children}</main>
-      <Footer />
-    </Wrapper>
-    </>
+      <Wrapper>
+        <GlobalStyle />
+        <MDXProvider components={components} >
+        <Header />
+        <main>{children}</main>
+        <Footer />
+        </MDXProvider>
+      </Wrapper>
   )
 }
 

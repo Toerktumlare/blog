@@ -5,7 +5,6 @@ import Layout from "../components/layout"
 import Seo from "../components/seo"
 import { createGlobalStyle } from "styled-components"
 import MajorHeading from "../elements/MajorHeading"
-import Tag from "../elements/Tag"
 import TagSection from "../components/tagSection"
 import SmallDate from "../elements/SmallDate"
 
@@ -103,7 +102,7 @@ export const GlobalStyle = createGlobalStyle`
 
 const BlogIndex = ({ data, location }: PageProps<Queries.IndexPageQuery>) => {
   const siteTitle = data.site?.siteMetadata?.title || `Title`
-  const posts = data.allMarkdownRemark.nodes
+  const posts = data.allMdx.nodes
 
   return (
     <>
@@ -161,7 +160,7 @@ export const pageQuery = graphql`
         title
       }
     }
-    allMarkdownRemark(sort: { fields: [frontmatter___date], order: DESC }) {
+    allMdx(sort: { fields: [frontmatter___date], order: DESC }) {
       nodes {
         excerpt
         fields {
