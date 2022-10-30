@@ -64,8 +64,7 @@ Stream<String> values = Stream.of("Hello", "World")
 Is the newest addition to Monads in java. Unlike Optional and Streams that take values, CompletableFuture takes an async operation and returns a new object of the type CompletableFuture.
 
 ```java
-CompletableFuture<String> value = 
-CompletableFuture.supplyAsync(() -> "Hello" + " World")
+CompletableFuture<String> value = CompletableFuture.supplyAsync(() -> "Hello" + " World")
     .thenApply(s -> s.toUpperCase());
 ```
 
