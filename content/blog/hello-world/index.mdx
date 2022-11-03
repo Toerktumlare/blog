@@ -4,6 +4,9 @@ date: "2015-05-01T22:12:03.284Z"
 description: "Hello World"
 tags: first
 ---
+import InfoBox from "../../../src/elements/boxes/InfoBox";
+import WarningBox from "../../../src/elements/boxes/WarningBox";
+import DangerBox from "../../../src/elements/boxes/DangerBox";
 
 This is my first post on my new fake blog! How exciting!
 
@@ -21,6 +24,19 @@ Oh, and here's a great quote from this Wikipedia on
 > firm-textured, round yolk that is bright orange-red in color.
 
 ![Chinese Salty Egg](./salty_egg.jpg)
+
+<InfoBox>
+```rust
+const foobar = 1;
+```
+    Base64 is designed to carry data stored in binary formats across channels that only reliably support text content.
+</InfoBox>
+<WarningBox>
+    Base64 is designed to carry data stored in binary formats across channels that only reliably support text content.
+</WarningBox>
+<DangerBox>
+    Base64 is designed to carry data stored in binary formats across channels that only reliably support text content.
+</DangerBox>
 
 You can also write code blocks here!
 

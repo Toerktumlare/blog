@@ -22,6 +22,7 @@ export const GlobalStyle = createGlobalStyle`
     --background-color: #222225;
     --page-width: 60em;
     --font-color: #e8e9ed;
+    --font-dark-color: #151515;
     --header-font-color: #7a3496;
     --color-gray-700: #BFDBF7;
     --color-tertiary: #ffdf2c;
@@ -30,6 +31,14 @@ export const GlobalStyle = createGlobalStyle`
     --tertiary-color: #a3abba;
     --primary-color: #62c4ff;
     --error-color: #A31621;
+
+    --info-color: #62c4ff;
+    --dark-info-color: #0DA2FB;
+    --warning-color: #c7b02c;
+    --dark-warning-color: #766400;
+    --danger-color: #A31621;
+    --dark-danger-color: #580006;
+
     --progress-bar-background: #3f3f44;
     --progress-bar-fill: #62c4ff;
     --code-bg-color: #3f3f44;

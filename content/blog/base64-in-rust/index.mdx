@@ -4,7 +4,9 @@ date: "2022-09-10T21:08:00.000Z"
 description: "Honestly, i have a confession to make. I have used base64 numerous times, I know why you use it. I've had a vague understanding of how it is implemented. But i have never ever fully understood how it works. Until now. Lets implement a basic base64 program in Rust."
 tags: rust, binary
 ---
-import { AttentionBox, AttentionBody } from "../../../src/elements/AttentionBox";
+import InfoBox from "../../../src/elements/boxes/InfoBox";
+import WarningBox from "../../../src/elements/boxes/WarningBox";
+import DangerBox from "../../../src/elements/boxes/DangerBox";
 
 I have a confession to make. Please don't think any less of me, but i have never really understood how Base64 _actually_ works. I know what it is used for. I know when to use it and I have a vague understanding of how it is implemented, but i have never **fully** understood it. Until now. 
 
@@ -15,16 +17,16 @@ So in this post im going to try to explain what base64 is, a bit of how it works
 ## What is it used for?
 Lets look at how [wikipedia](https://en.wikipedia.org/wiki/Base64) describes base64.
 
-<AttentionBox>
+<InfoBox>
     Base64 is designed to carry data stored in binary formats across channels that only reliably support text content.
-</AttentionBox>
+</InfoBox>
 
 When we send information on the internet all servers can't accept all formats of data. But one thing in common is that most servers can accept data in the form of text. This is where base64 comes into play. If a server can't accept a certain format, we can always send the data as a textual representation of the data, then the server can accept the text and convert it into whatever format it needs to be on its and.
 
-```
-Important, Base64 is NOT encryption, its an encoding schema. We convert it to something and have the ability to convert 
-it back. Don't ever use Base64 on passwords etc. and think it will protect you, anyone can decode Base64.
-```
+<DangerBox>
+Important, Base64 is NOT encryption, its an encoding schema. We encode it and anyone has the ability to decode 
+it back. Don't ever use Base64 on passwords or any other type of secret and think it will protect you. Anyone can decode Base64.
+</DangerBox>
 
 On the world wide web, base64 is very common to use when wanting to send send files like images and and css files using base64 as a textual representation of the data instead of sending the data itself. For instance you commonly use it when you want send email attachments and this is because the original SMTP protocol only supported [7-bit ascii](https://en.wikipedia.org/wiki/ASCII) so there was a need to be able to represent data as text when sending emails.
 
