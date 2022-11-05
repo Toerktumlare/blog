@@ -10,7 +10,7 @@ import SmallDate from "../elements/SmallDate"
 
 export const GlobalStyle = createGlobalStyle`
   :root {
-    --global-font-size: 18px;
+    --global-font-size: 20px;
     --global-line-height: 1.4em;
     --global-space: 10px;
     --font-stack: Ubuntu Mono, Monaco, Lucida Console, Liberation Mono,
