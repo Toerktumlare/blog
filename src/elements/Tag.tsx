@@ -9,7 +9,7 @@ const StyledWrapper = styled.div`
 `
 
 const Text = styled.p`
-  font-size: 10px;
+  font-size: 14px;
   text-align: center;
   margin: 2px 10px 2px;
 `

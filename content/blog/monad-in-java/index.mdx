@@ -251,12 +251,13 @@ This flatMap function will return a `Try.class` for us. But the most complicated
 When we pass a function to a function we need to use the functional interfaces in java and we need to declare what types this function will take.
 
 Read more about functional interfaces here:
-https://www.baeldung.com/java-8-functional-interfaces
+[https://www.baeldung.com/java-8-functional-interfaces](https://www.baeldung.com/java-8-functional-interfaces)
 
 So when we pass our function we want it to be as generic as possible.
 
 ```java
-//Function.class in java@FunctionalInterface
+//Function.class in java
+@FunctionalInterface
 public interface Function<T, R> f {
     R apply(T t);
 }
@@ -272,7 +273,9 @@ Function<? super T, ? extends U> f
 
 This means that the first argument passed (that we consume) must have at least the functionality of `T` (hence `super`). And it will produce something that `extends U`.
 
-Joshua Bloch explains the super/extends (PECS) in java generics very good in this talk. It’s a strongly recommended watch.
+Joshua Bloch explains the super/extends (PECS) in java generics very good in [this](https://youtu.be/V1vQf4qyMXg) talk. It's a strongly recommended watch.
+
+<iframe style={{ marginBottom: "50px", marginTop: "40px" }} width="560" height="315" src="https://www.youtube.com/embed/V1vQf4qyMXg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 <Blockquote source="Joshua Bloch">
 To remember how to pass functions always think of PECS! Producers Extend, Consumers Super!
