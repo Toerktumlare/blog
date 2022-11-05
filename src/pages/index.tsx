@@ -10,13 +10,13 @@ import SmallDate from "../elements/SmallDate"
 
 export const GlobalStyle = createGlobalStyle`
   :root {
-    --global-font-size: 15px;
+    --global-font-size: 16px;
     --global-line-height: 1.4em;
     --global-space: 10px;
-    --font-stack: Menlo, Monaco, Lucida Console, Liberation Mono,
+    --font-stack: Ubuntu Mono, Monaco, Lucida Console, Liberation Mono,
     DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace,
     serif;
-    --mono-font-stack: Menlo, Monaco, Lucida Console, Liberation Mono,
+    --mono-font-stack: Ubuntu Mono, Monaco, Lucida Console, Liberation Mono,
     DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace,
     serif;
     --background-color: #222225;

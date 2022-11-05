@@ -101,7 +101,6 @@ const config: GatsbyConfig = {
                 ) {
                   nodes {
                     excerpt
-                    html
                     fields {
                       slug
                     }
@@ -136,13 +135,13 @@ const config: GatsbyConfig = {
     {
       resolve: "gatsby-omni-font-loader",
       options: {
-        mode: "async",
         enableListener: true,
-        custom: [
+        preconnect: [`https://fonts.googleapis.com`],
+        web: [
           {
-            name: ["Deja Vu Sans Mono"],
-            file: "/fonts/dejavu/style.css"
-          },
+            name: `Ubuntu Mono`,
+            file: `https://fonts.googleapis.com/css2?family=Ubuntu+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap`
+          }
         ]
       }
     }

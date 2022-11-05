@@ -14,12 +14,13 @@ This repository contains the blog for blog.toerktumlare.com
 - [ ] remove all `any` in the code base
 - [ ] rewrite gatsby node to proper typescript
 - [ ] rewrite all css to styled component
-- [ ] change from using markdown, to use mdx
+- [x] change from using markdown, to use mdx
 - [x] make sure home button works
 - [x] fix main header link in both test and prod
 - [x] implement tags on blog posts (frontmatter)
 - [x] add stack overflow flare
-- [ ] change font to Ubuntu Mono (google fonts)
+- [x] change font to Ubuntu Mono (google fonts)
+- [ ] fix links at the end in cve blog post
 
 ## CSS changes:
  - [x] next/previous blog post little larger font
@@ -27,7 +28,7 @@ This repository contains the blog for blog.toerktumlare.com
  - [x] footer text, smaller
  - [x] design tags
  - [ ] style a blockquote component
- - [ ] style a warning component
+ - [x] style a warning component
  - [x] larger h1
  - [ ] add different colors depending on tag
  - [x] fix dates in blog list and blog posts
@@ -37,3 +38,6 @@ This repository contains the blog for blog.toerktumlare.com
  - [x] move "Write a monad in java"
  - [ ] move "Spring security + JWT"
 
+## Build a like button
+- [ ] write a lambda in aws
+- [ ] set up a 
