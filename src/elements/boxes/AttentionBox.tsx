@@ -1,9 +1,7 @@
 import React, { ReactNode } from "react";
 import styled from "styled-components";
-import { AiOutlineInfoCircle, AiOutlineWarning } from 'react-icons/ai'
-import { BiErrorAlt } from 'react-icons/bi'
 
-const StyledWrapper = styled("div")<WrapperStyled>`
+const StyledWrapper = styled("div") <WrapperStyled>`
   border-left-width: 8px;
   border-left-style: solid;
   border-left-color: ${props => props.borderColor || 'var(--primary-color)'};
@@ -11,12 +9,16 @@ const StyledWrapper = styled("div")<WrapperStyled>`
   background-color: ${props => props.backgroundColor || 'var(--secondary-color)'};
   display: flex;
   flex-direction: column;
-  padding: 16px;
+  padding: 16px 16px 0px 16px;
   margin-bottom: 21px;
   color: ${props => props.textColor || 'var(--font-color)'};
+  div {
+    font-size: ${props => props.fontSize + "px" || 'var(--font-size)'};
+    line-height: 1.2em;
+  }
 `
 
-const Header = styled.div`
+export const Header = styled.div`
   display: flex;
   text-transform: uppercase;
   font-weight: bolder;
@@ -24,11 +26,16 @@ const Header = styled.div`
   align-items: center;
 `
 
-const Content = styled.div`
-  font-size: 15px;
-  p {
-    margin-bottom: 0px;
-  }
+export const Footer = styled.div`
+  display: flex;
+  font-style: italic;
+  font-weight: bolder;
+  align-items: center;
+  justify-content: end;
+  font-size: 16px;
+`
+
+export const Content = styled.div`
   code {
     padding-left: 5px;
     padding-right: 5px;
@@ -36,73 +43,41 @@ const Content = styled.div`
   }
 `
 
-const Icon = styled.div`
+export const Icon = styled.div`
   margin-right: 7px;
   margin-bottom: 0px;
-  
 `
 
-export const AttentionBox = ({ children, type }: BoxProps) => {
-  let header = null;
-  let backgroundColor = null;
-  let borderColor = null;
-  let textColor = null;
-  if (type == "info") {
-    backgroundColor = 'var(--info-color)';
-    borderColor = 'var(--dark-info-color)';
-    textColor = 'var(--font-dark-color)';
-    header = (
-      <>
-        <Icon>
-          <AiOutlineInfoCircle size={25} style={{ verticalAlign: 'middle' }} />
-        </Icon>
-        info
-      </>
-    )
-  } else if (type == "warning") {
-    backgroundColor = 'var(--warning-color)';
-    borderColor = 'var(--dark-warning-color)';
-    header = (
-      <>
-        <Icon>
-          <AiOutlineWarning size={25} style={{ verticalAlign: 'middle' }} />
-        </Icon>
-        warning
-      </>
-    )
-  } else if (type == "danger") {
-    backgroundColor = 'var(--danger-color)';
-    borderColor = 'var(--dark-danger-color)';
-    textColor = 'var(--font-color)';
-    header = (
-      <>
-        <Icon>
-          <BiErrorAlt size={25} style={{ verticalAlign: 'middle' }} />
-        </Icon>
-        danger
-      </>
-    )
-  }
-
+export const AttentionBox = ({
+  children,
+  backgroundColor,
+  borderColor,
+  fontSize,
+  textColor
+}: BoxProps) => {
   return (
-    <StyledWrapper borderColor={borderColor} backgroundColor={backgroundColor} textColor={textColor}>
-      <Header>
-        {header}
-      </Header>
-      <Content>
-        {children}
-      </Content>
+    <StyledWrapper
+      borderColor={borderColor}
+      backgroundColor={backgroundColor}
+      textColor={textColor}
+      fontSize={fontSize}
+    >
+      {children}
     </StyledWrapper>
   )
 }
 
 interface BoxProps {
-  type: string,
+  borderColor?: string,
+  backgroundColor?: string,
+  textColor?: string,
+  fontSize?: number,
   children: ReactNode
 }
 
 interface WrapperStyled {
   borderColor: string | null,
   backgroundColor: string | null,
-  textColor: string | null
+  textColor: string | null,
+  fontSize?: number | null
 }

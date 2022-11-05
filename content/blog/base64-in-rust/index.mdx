@@ -4,8 +4,7 @@ date: "2022-09-10T21:08:00.000Z"
 description: "Honestly, i have a confession to make. I have used base64 numerous times, I know why you use it. I've had a vague understanding of how it is implemented. But i have never ever fully understood how it works. Until now. Lets implement a basic base64 program in Rust."
 tags: rust, binary
 ---
-import InfoBox from "../../../src/elements/boxes/InfoBox";
-import WarningBox from "../../../src/elements/boxes/WarningBox";
+import Blockquote from "../../../src/elements/boxes/Blockquote";
 import DangerBox from "../../../src/elements/boxes/DangerBox";
 
 I have a confession to make. Please don't think any less of me, but i have never really understood how Base64 _actually_ works. I know what it is used for. I know when to use it and I have a vague understanding of how it is implemented, but i have never **fully** understood it. Until now. 
@@ -17,9 +16,9 @@ So in this post im going to try to explain what base64 is, a bit of how it works
 ## What is it used for?
 Lets look at how [wikipedia](https://en.wikipedia.org/wiki/Base64) describes base64.
 
-<InfoBox>
+<Blockquote source="wikipedia">
     Base64 is designed to carry data stored in binary formats across channels that only reliably support text content.
-</InfoBox>
+</Blockquote>
 
 When we send information on the internet all servers can't accept all formats of data. But one thing in common is that most servers can accept data in the form of text. This is where base64 comes into play. If a server can't accept a certain format, we can always send the data as a textual representation of the data, then the server can accept the text and convert it into whatever format it needs to be on its and.
 

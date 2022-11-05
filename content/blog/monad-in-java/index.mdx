@@ -4,6 +4,7 @@ date: "2019-05-28T22:12:03.284Z"
 description: "In this post i’m going to try to explain what a monad is, and then we are going to implement a simple Try/Catch Monad in Java."
 tags: java, monads, programming
 ---
+import Blockquote from "../../../src/elements/boxes/Blockquote";
 
 Monad? What the h…ll is he talking about?
 
@@ -273,7 +274,9 @@ This means that the first argument passed (that we consume) must have at least t
 
 Joshua Bloch explains the super/extends (PECS) in java generics very good in this talk. It’s a strongly recommended watch.
 
-> To remember how to pass functions always think of PECS! Producers Extend, Consumers Super!
+<Blockquote source="Joshua Bloch">
+To remember how to pass functions always think of PECS! Producers Extend, Consumers Super!
+</Blockquote>
 
 Ints, Longs, Doubles they are all numbers, so if we had one of those in ur `Success.class` the compiler would infer the `T` type with the `Number.class`. This way it knows that everything passed in will at least have the functionality of the `Number.class` since this is the class they all inherit from.
 
