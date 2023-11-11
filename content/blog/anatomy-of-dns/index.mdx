@@ -1,0 +1,30 @@
+---
+title: Anatomy of a DNS Request/Response
+date: "2023-11-10T21:08:00.000Z"
+description: "One of the things that i have always been bad at is networking, and i during my _interneting_ i stumbled
+upon a blog post taling about DNS. So i decided i would create a DNS client in Rust. SO might write a couple of post
+about my adventures writing it. This first post will talk about the anatomy."
+tags: rust, binary
+---
+
+I like to just randomly spend my time on the internet, and every once in a while i stumble upon interesting blog posts.
+I have for a very long time considered myself really bad at everything related to networking. So when i find good blog
+posts about things im weak they get stuck in my head.
+
+It was blog post about how you would go about to write a DNS client. I just glanced through it without looking at any
+implementations, I then decided to look up the RFC and suddenly had this feeling that... i could write one of
+those.
+
+So in some blog posts i will write about all the things i learnt during the development and they will both be DNS
+related, but also coding related, and how i solved ceratin problems.
+
+## What is DNS (Domain Name System)?
+
+Like i usually do, i start out with the wikipedia explanation.
+
+<Blockquote source="wikipedia">
+The Domain Name System (DNS) is a hierarchical and distributed naming system for computers, services, and other
+resources ... it translates readily memorized domain names to the numerical IP addresses needed for locating and
+identifying computer services and devices with the underlying network protocols.
+</Blockquote>
+
