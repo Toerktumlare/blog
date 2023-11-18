@@ -6,6 +6,7 @@ upon a blog post taling about DNS. So i decided i would create a DNS client in R
 about my adventures writing it. This first post will talk about the anatomy."
 tags: rust, binary
 ---
+import Blockquote from "../../../src/elements/boxes/Blockquote";
 
 I like to just randomly spend my time on the internet, and every once in a while i stumble upon interesting blog posts.
 I have for a very long time considered myself really bad at everything related to networking. So when i find good blog
@@ -28,3 +29,171 @@ resources ... it translates readily memorized domain names to the numerical IP a
 identifying computer services and devices with the underlying network protocols.
 </Blockquote>
 
+The short explanation is that the internet has no idea what web addresses are, the internet works with ip addresses. SO all over the internet there are DNS servers that you can query by a web address and get an ip-address back instead. So think of DNS-servers as sort of old school phonebooks.
+
+The original DNS specification is defined in the rfc 1035, and we are going to reference that throughout this post.
+
+## Lets make DNS Request
+
+So in order to make a dns request there are several different dns clients out there. Im going to use the program `dig` but there are others like `nslookup` etc.
+
+```bash
+➜  ~ dig blog.toerktumlare.com
+
+; <<>> DiG 9.18.18-0ubuntu0.22.04.1-Ubuntu <<>> blog.toerktumlare.com
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 40955
+;; flags: qr rd ra; QUERY: 1, ANSWER: 5, AUTHORITY: 0, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 65494
+;; QUESTION SECTION:
+;blog.toerktumlare.com.		IN	A
+
+;; ANSWER SECTION:
+blog.toerktumlare.com.	3600	IN	CNAME	tandolf.github.io.
+tandolf.github.io.	3600	IN	A	185.199.108.153
+tandolf.github.io.	3600	IN	A	185.199.109.153
+tandolf.github.io.	3600	IN	A	185.199.110.153
+tandolf.github.io.	3600	IN	A	185.199.111.153
+
+;; Query time: 59 msec
+;; SERVER: 127.0.0.53#53(127.0.0.53) (UDP)
+;; WHEN: Sat Nov 11 18:38:37 CET 2023
+;; MSG SIZE  rcvd: 145
+```
+
+So a simple DNS request on this blog returns the above information. There is a lot of information returned, but what does the _actual_ request and response look like.
+
+If we run `tcpdump` and sniff the traffic we get the following.
+
+```bash
+➜  ~ sudo tcpdump --interface any -n port 53 -X
+tcpdump: data link type LINUX_SLL2
+tcpdump: verbose output suppressed, use -v[v]... for full protocol decode
+listening on any, link-type LINUX_SLL2 (Linux cooked v2), snapshot length 262144 bytes
+18:49:49.939297 lo    In  IP 127.0.0.1.38500 > 127.0.0.53.53: 39085+ [1au] A? blog.toerktumlare.com. (62)
+	0x0000:  4500 005a c2c1 0000 4011 b99b 7f00 0001  E..Z....@.......
+	0x0010:  7f00 0035 9664 0035 0046 fe8d 98ad 0120  ...5.d.5.F......
+	0x0020:  0001 0000 0000 0001 0462 6c6f 670c 746f  .........blog.to
+	0x0030:  6572 6b74 756d 6c61 7265 0363 6f6d 0000  erktumlare.com..
+	0x0040:  0100 0100 0029 04d0 0000 0000 000c 000a  .....)..........
+	0x0050:  0008 e157 ecab eb0d 51bd                 ...W....Q.
+18:49:49.939588 lo    In  IP 127.0.0.53.53 > 127.0.0.1.38500: 39085 5/0/1 CNAME tandolf.github.io., A 185.199.108.153, A 185.199.110.153, A 185.199.109.153, A 185.199.111.153 (145)
+	0x0000:  4500 00ad 8a61 4000 0111 f0a8 7f00 0035  E....a@........5
+	0x0010:  7f00 0001 0035 9664 0099 fee0 98ad 8180  .....5.d........
+	0x0020:  0001 0005 0000 0001 0462 6c6f 670c 746f  .........blog.to
+	0x0030:  6572 6b74 756d 6c61 7265 0363 6f6d 0000  erktumlare.com..
+	0x0040:  0100 01c0 0c00 0500 0100 000b 6f00 1307  ............o...
+	0x0050:  7461 6e64 6f6c 6606 6769 7468 7562 0269  tandolf.github.i
+	0x0060:  6f00 c033 0001 0001 0000 0b6f 0004 b9c7  o..3.......o....
+	0x0070:  6c99 c033 0001 0001 0000 0b6f 0004 b9c7  l..3.......o....
+	0x0080:  6e99 c033 0001 0001 0000 0b6f 0004 b9c7  n..3.......o....
+	0x0090:  6d99 c033 0001 0001 0000 0b6f 0004 b9c7  m..3.......o....
+	0x00a0:  6f99 0000 29ff d600 0000 0000 00         o...)........
+^C
+2 packets captured
+4 packets received by filter
+0 packets dropped by kernel
+```
+
+This is once again a lot of information. The first chunk, is the actual query. While the second part is the response from the dns server.
+
+So if we isolate just the query:
+
+```bash
+18:49:49.939297 lo    In  IP 127.0.0.1.38500 > 127.0.0.53.53: 39085+ [1au] A? blog.toerktumlare.com. (62)
+	0x0000:  4500 005a c2c1 0000 4011 b99b 7f00 0001  E..Z....@.......
+	0x0010:  7f00 0035 9664 0035 0046 fe8d 98ad 0120  ...5.d.5.F......
+	0x0020:  0001 0000 0000 0001 0462 6c6f 670c 746f  .........blog.to
+	0x0030:  6572 6b74 756d 6c61 7265 0363 6f6d 0000  erktumlare.com..
+	0x0040:  0100 0100 0029 04d0 0000 0000 000c 000a  .....)..........
+	0x0050:  0008 e157 ecab eb0d 51bd                 ...W....Q.
+```
+
+We see that there is some text and just a bunch of different hex numbers, so this is the time to bring up the rfc spec. If we look into the _message_ section of the rfc, they have a image representing a query and response.
+
+So all messages borth requests and responses have the following structure.
+
+```
+    +---------------------+
+    |        Header       |
+    +---------------------+
+    |       Question      | the question for the name server
+    +---------------------+
+    |        Answer       | RRs answering the question
+    +---------------------+
+    |      Authority      | RRs pointing toward an authority
+    +---------------------+
+    |      Additional     | RRs holding additional information
+    +---------------------+
+```
+
+The header and question section is always included in both the request and response. But we are going to start with breaking down the header.
+
+## The DNS Header
+
+An image usually says a 1000 words so we are going to extract an image from the rfc once again.
+
+```
+                                    1  1  1  1  1  1
+      0  1  2  3  4  5  6  7  8  9  0  1  2  3  4  5
+    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+    |                      ID                       |
+    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+    |QR|   Opcode  |AA|TC|RD|RA|   Z    |   RCODE   |
+    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+    |                    QDCOUNT                    |
+    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+    |                    ANCOUNT                    |
+    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+    |                    NSCOUNT                    |
+    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+    |                    ARCOUNT                    |
+    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+```
+
+## DNS Question section
+```
+
+                                    1  1  1  1  1  1
+      0  1  2  3  4  5  6  7  8  9  0  1  2  3  4  5
+    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+    |                                               |
+    /                     QNAME                     /
+    /                                               /
+    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+    |                     QTYPE                     |
+    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+    |                     QCLASS                    |
+    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+```
+
+## DNS Resource record
+```
+                                    1  1  1  1  1  1
+      0  1  2  3  4  5  6  7  8  9  0  1  2  3  4  5
+    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+    |                                               |
+    /                                               /
+    /                      NAME                     /
+    |                                               |
+    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+    |                      TYPE                     |
+    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+    |                     CLASS                     |
+    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+    |                      TTL                      |
+    |                                               |
+    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+    |                   RDLENGTH                    |
+    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--|
+    /                     RDATA                     /
+    /                                               /
+    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+```
+
+## Message compression
+
+There is some compression actually built into the DNS format to send smaller messages. And im not going to explain how it works in this blog post but there might be a seperate post about it with a code example of how to solve the compression in DNS messages.
