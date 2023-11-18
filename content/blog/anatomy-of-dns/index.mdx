@@ -112,9 +112,41 @@ So if we isolate just the query:
 	0x0050:  0008 e157 ecab eb0d 51bd                 ...W....Q.
 ```
 
-We see that there is some text and just a bunch of different hex numbers, so this is the time to bring up the rfc spec. If we look into the _message_ section of the rfc, they have a image representing a query and response.
+We see that there is some text and just a bunch of different hex numbers. Out of
+all thsese hexnumbers we need first start to discard all the things we dont
+need. The first `20 bytes` is the ipv4 header so we can discard that.
 
-So all messages borth requests and responses have the following structure.
+The ipv4 header:
+```
+	4500 005a c2c1 0000 4011 b99b 7f00 0001 7f00 0035
+```
+
+The next `8 bytes` after that is the _UDP Header_. And already we learnt
+something, and that is that DNS is sent over UDP. You have to remember that the
+original DNS specification is from November 1987, it was in the early days of
+the internet.
+
+The UDP header:
+```
+9664 0035 0046 fe8d 
+```
+
+Its worth noting that the specification has been updated several times, and that
+you can send DNS over TCP (most DNS resolvers will accept it) and that DNSSec
+has also been introduced wich adds a lot of security features to the protocol.
+
+So what we are left with is:
+```
+98ad 0120 0001 0000 0000 0001 0462 6c6f 670c 746f 6572 6b74 756d 6c61 7265 0363
+6f6d 0000 0100 0100 0029 04d0 0000 0000 000c 000a 0008 e157 ecab eb0d 51bd
+```
+
+And this leadies and gentlemen is our raw dns request!
+
+So it is about the time we should bring up the rfc spec and if we look into the
+_message_ section of the rfc, they have a image representing a query and
+response. So all messages, both requests and responses have the following
+general structure.
 
 ```
     +---------------------+
@@ -130,11 +162,10 @@ So all messages borth requests and responses have the following structure.
     +---------------------+
 ```
 
-The header and question section is always included in both the request and response. But we are going to start with breaking down the header.
-
 ## The DNS Header
 
-An image usually says a 1000 words so we are going to extract an image from the rfc once again.
+An image usually says a 1000 words so we are going to extract an image from the
+rfc once again that shows the overall structure of the header section.
 
 ```
                                     1  1  1  1  1  1
@@ -153,6 +184,17 @@ An image usually says a 1000 words so we are going to extract an image from the 
     |                    ARCOUNT                    |
     +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
 ```
+
+The header is always __12 bytes long__ and below follows a simple description of each of the sections.
+
+- ID
+Contains a random ID set by the asking client. The server that receives the
+request will basically just copy over this id to the response.
+
+- QR (Query or Response)
+A one bit field that specifies whether this is message is a query (0, zero) or a response (1, one)
+
+
 
 ## DNS Question section
 ```
