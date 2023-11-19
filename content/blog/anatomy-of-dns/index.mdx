@@ -23,11 +23,11 @@ related, but also coding related, and how i solved ceratin problems.
 
 Like i usually do, i start out with the wikipedia explanation.
 
-<Blockquote source="wikipedia">
-The Domain Name System (DNS) is a hierarchical and distributed naming system for computers, services, and other
+    <Blockquote source="wikipedia">
+                The Domain Name System (DNS) is a hierarchical and distributed naming system for computers, services, and other
 resources ... it translates readily memorized domain names to the numerical IP addresses needed for locating and
 identifying computer services and devices with the underlying network protocols.
-</Blockquote>
+    </Blockquote>
 
 The short explanation is that the internet has no idea what web addresses are, the internet works with ip addresses. SO all over the internet there are DNS servers that you can query by a web address and get an ip-address back instead. So think of DNS-servers as sort of old school phonebooks.
 
@@ -118,35 +118,38 @@ need. The first `20 bytes` is the ipv4 header so we can discard that.
 
 The ipv4 header:
 ```
-	4500 005a c2c1 0000 4011 b99b 7f00 0001 7f00 0035
+  4500 005a c2c1 0000 4011 b99b 7f00 0001 7f00 0035
 ```
 
 The next `8 bytes` after that is the _UDP Header_. And already we learnt
-something, and that is that DNS is sent over UDP. You have to remember that the
+something, and that is that __DNS is sent over UDP__. You have to remember that the
 original DNS specification is from November 1987, it was in the early days of
 the internet.
 
 The UDP header:
 ```
-9664 0035 0046 fe8d 
+  9664 0035 0046 fe8d 
 ```
 
 Its worth noting that the specification has been updated several times, and that
-you can send DNS over TCP (most DNS resolvers will accept it) and that DNSSec
+you can in fact send DNS over TCP (most DNS resolvers will accept it) and that DNSSec
 has also been introduced wich adds a lot of security features to the protocol.
 
 So what we are left with is:
 ```
-98ad 0120 0001 0000 0000 0001 0462 6c6f 670c 746f 6572 6b74 756d 6c61 7265 0363
-6f6d 0000 0100 0100 0029 04d0 0000 0000 000c 000a 0008 e157 ecab eb0d 51bd
+  98ad 0120 0001 0000 0000 0001 0462 6c6f 670c 746f 
+  6572 6b74 756d 6c61 7265 0363 6f6d 0000 0100 0100 
+  0029 04d0 0000 0000 000c 000a 0008 e157 ecab eb0d 
+  51bd
 ```
 
-And this leadies and gentlemen is our raw dns request!
+And this ladies and gentlemen is our raw dns request!
 
-So it is about the time we should bring up the rfc spec and if we look into the
-_message_ section of the rfc, they have a image representing a query and
-response. So all messages, both requests and responses have the following
-general structure.
+## Anatomy of a DNS message
+So i think it is about time that we pull up the official dns specification and
+if we look in the _message_ section of the rfc, they have a very nice image
+representation of what a single dns message looks like. So all in all a DNS
+messages, both requests and responses, has the following general structure.
 
 ```
     +---------------------+
@@ -162,12 +165,13 @@ general structure.
     +---------------------+
 ```
 
+One of the things we are going to see later is that the Heaader and the Question is always going to be in the message and the repsonses, but depending on what respons we get back the last three sections of the message will differ.
+
 ## The DNS Header
 
-An image usually says a 1000 words so we are going to extract an image from the
-rfc once again that shows the overall structure of the header section.
+So we are going to start out with the header, and an image usually says more than a 1000 words so we are going to extract an image (once again) rfc that shows the overall structure of the header section.
 
-```
+```bash
                                     1  1  1  1  1  1
       0  1  2  3  4  5  6  7  8  9  0  1  2  3  4  5
     +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
@@ -185,20 +189,127 @@ rfc once again that shows the overall structure of the header section.
     +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
 ```
 
-The header is always __12 bytes long__ and below follows a simple description of each of the sections.
+A DNS header is always __12 bytes long__ and contains all the metadata for the message. This includes both information that has to do with the request, but also information about the response, since a DNS message is actually both.
+    <br />
 
-- ID
-Contains a random ID set by the asking client. The server that receives the
-request will basically just copy over this id to the response.
+## Id
+```bash
+      0  1  2  3  4  5  6  7  8  9  0  1  2  3  4  5
+    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+    |                      ID                       |
+    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+```
+A 16 bit identifier assigned by the program that generates the query.
+This identifier is copied over to the corresponding reply and can be used by the
+requester to match up replies to outstanding queries. So if you make a lot of requests, this id ccan help you match up what request to its corresponding response. For instance in a async environment.
 
-- QR (Query or Response)
-A one bit field that specifies whether this is message is a query (0, zero) or a response (1, one)
+## Flags
+```bash
+      0  1  2  3  4  5  6  7  8  9  0  1  2  3  4  5
+    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+    |QR|   Opcode  |AA|TC|RD|RA|   Z    |   RCODE   |
+    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+```
+Several different flags that will for instance define what type of DNS message this is or provide instructions to the server of how you want it to process your request. This header will also contain a response code that will tell us of the outcome of the request (if there was an error or not etc.). 
+
+Lets go through all the fields one by one.
+
+#### QR (Query/Response)
+A one bit field that specifies whether this message is a query (0), or a response (1).
+
+#### OPCODE (Operation Code)
+A four bit field that specifies what kind of query this message is. This value is set
+by the originator of a query and copied into the response. The values are:
+
+        0               a standard query (QUERY)
+
+        1               an inverse query (IQUERY)
+
+        2               a server status request (STATUS)
+
+        3-15            reserved for future use
+
+#### AA (Authoritative Answer)
+this bit is valid in responses, and specifies if the responding name server is
+an authority for the domain name we are aasking about. Basically it denotes
+if the name server we asked has _responsabillity_ over the domain.
+
+Note that the contents of the answer section may have multiple owners because of
+aliases. This AA bit corresponds to the name which matches the query name.
+
+#### TC (TrunCation) 
+Specifies that this message was truncated due to length greater than that
+permitted on the transmission channel (so basically if this message was too long).
+
+#### RD (Recursion Desired)
+This bit can be set in a query and is copied into the response. If RD is set, it directs the name server to pursue the query recursively. So if the name server im asking doesn't know what the IP-address is for the domain i'm querying about, im telling the name server to start asking around to other name servers until it fins one that does know. This bit is usually always set, but there are some usercases when you dont want to do recursive lookups. 
+
+#### RA (Recursion Available) 
+This be is set or cleared in a response, and denotes whether recursive query
+support is available in the name server.
+
+#### Z               
+Reserved for future use.  Must be zero in all queries and responses.
+
+#### RCODE         
+Response code - this 4 bit field is set as part of responses.  The values have
+the following interpretation:
+
+          0.               __No error condition__
+
+          1.               __Format error__ - The name server was unable to interpret the query.
+
+          2.               __Server failure__ - The name server was unable to process this query due to a problem with the name 
+                           server.
+
+          3.               __Name Error__ - 
+Meaningful only for responses from an authoritative name server, this code
+                           signifies that the domain name referenced in the query does not exist.
+
+          4.               __Not Implemented__ - The name server does not support the requested kind of query.
+
+          5.               __Refused__
+The name server refuses to perform the specified operation for policy
+                           reasons. For example, a name server may not wish to provide the information to the
+                           particular requester, or a name server may not wish to perform a particular
+                           operation (e.g., zone transfer) for particular data.
+
+          6-15             Reserved for future use.
+
+## Count Section
+
+```bash
+      0  1  2  3  4  5  6  7  8  9  0  1  2  3  4  5
+    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+    |                    QDCOUNT                    |
+    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+    |                    ANCOUNT                    |
+    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+    |                    NSCOUNT                    |
+    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+    |                    ARCOUNT                    |
+    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+```
+#### QDCOUNT
+an unsigned 16 bit integer specifying the number of entries in the question
+section.
+
+#### ANCOUNT
+an unsigned 16 bit integer specifying the number of resource records in the
+answer section.
+
+#### NSCOUNT
+an unsigned 16 bit integer specifying the number of name server resource records
+in the authority records section.
+
+#### ARCOUNT
+an unsigned 16 bit integer specifying the number of resource records in the
+additional records section.
 
 
 
 ## DNS Question section
-```
-
+```bash
                                     1  1  1  1  1  1
       0  1  2  3  4  5  6  7  8  9  0  1  2  3  4  5
     +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
