@@ -7,35 +7,46 @@ about my adventures writing it. This first post will talk about the anatomy."
 tags: rust, binary
 ---
 import Blockquote from "../../../src/elements/boxes/Blockquote";
+import InfoBox from "../../../src/elements/boxes/WarningBox";
 
-I like to just randomly spend my time on the internet, and every once in a while i stumble upon interesting blog posts.
-I have for a very long time considered myself really bad at everything related to networking. So when i find good blog
+I like to just randomly spend my time on the internet, and every once in a while
+i stumble upon interesting blog posts.  I have for a very long time considered
+myself really bad at everything related to networking. So when i find good blog
 posts about things im weak they get stuck in my head.
 
-It was blog post about how you would go about to write a DNS client. I just glanced through it without looking at any
-implementations, I then decided to look up the RFC and suddenly had this feeling that... i could write one of
+It was blog post about how you would go about to write a DNS client. I just
+glanced through it without looking at any implementations, I then decided to
+look up the RFC and suddenly had this feeling that... i could write one of
 those.
 
-So in some blog posts i will write about all the things i learnt during the development and they will both be DNS
-related, but also coding related, and how i solved ceratin problems.
+So in some blog posts i will write about all the things i learnt during the
+development and they will both be DNS related, but also coding related, and how
+i solved ceratin problems.
 
 ## What is DNS (Domain Name System)?
 
 Like i usually do, i start out with the wikipedia explanation.
 
     <Blockquote source="wikipedia">
-                The Domain Name System (DNS) is a hierarchical and distributed naming system for computers, services, and other
-resources ... it translates readily memorized domain names to the numerical IP addresses needed for locating and
-identifying computer services and devices with the underlying network protocols.
+    The Domain Name System (DNS) is a hierarchical and distributed naming system for
+computers, services, and other resources ... it translates readily memorized
+domain names to the numerical IP addresses needed for locating and identifying
+computer services and devices with the underlying network protocols.
     </Blockquote>
 
-The short explanation is that the internet has no idea what web addresses are, the internet works with ip addresses. SO all over the internet there are DNS servers that you can query by a web address and get an ip-address back instead. So think of DNS-servers as sort of old school phonebooks.
+The short explanation is that the internet has no idea what web addresses are,
+the internet works with ip addresses. SO all over the internet there are DNS
+servers that you can query by a web address and get an ip-address back instead.
+So think of DNS-servers as sort of old school phonebooks.
 
-The original DNS specification is defined in the rfc 1035, and we are going to reference that throughout this post.
+The original DNS specification is defined in the rfc 1035, and we are going to
+reference that throughout this post.
 
-## Lets make DNS Request
+## Lets make a DNS Request
 
-So in order to make a dns request there are several different dns clients out there. Im going to use the program `dig` but there are others like `nslookup` etc.
+So in order to make a dns request there are several different dns clients out
+there. Im going to use the program `dig` but there are others like `nslookup`
+etc.
 
 ```bash
 ➜  ~ dig blog.toerktumlare.com
@@ -64,8 +75,13 @@ tandolf.github.io.	3600	IN	A	185.199.111.153
 ;; MSG SIZE  rcvd: 145
 ```
 
-So a simple DNS request on this blog returns the above information. There is a lot of information returned, but what does the _actual_ request and response look like.
-
+So a simple DNS request on this blog returns the above information. There is a
+lot of information returned, but what does the _actual_ request and response
+look like.
+    <br />
+    <br />
+    <br />
+    <br />
 If we run `tcpdump` and sniff the traffic we get the following.
 
 ```bash
@@ -98,8 +114,12 @@ listening on any, link-type LINUX_SLL2 (Linux cooked v2), snapshot length 262144
 0 packets dropped by kernel
 ```
 
-This is once again a lot of information. The first chunk, is the actual query. While the second part is the response from the dns server.
-
+This is once again a lot of information. The first chunk, is the actual query.
+While the second part is the response from the dns server.
+    <br />
+    <br />
+    <br />
+    <br />
 So if we isolate just the query:
 
 ```bash
@@ -134,7 +154,10 @@ The UDP header:
 Its worth noting that the specification has been updated several times, and that
 you can in fact send DNS over TCP (most DNS resolvers will accept it) and that DNSSec
 has also been introduced wich adds a lot of security features to the protocol.
-
+    <br />
+    <br />
+    <br />
+    <br />
 So what we are left with is:
 ```
   98ad 0120 0001 0000 0000 0001 0462 6c6f 670c 746f 
@@ -165,11 +188,15 @@ messages, both requests and responses, has the following general structure.
     +---------------------+
 ```
 
-One of the things we are going to see later is that the Heaader and the Question is always going to be in the message and the repsonses, but depending on what respons we get back the last three sections of the message will differ.
+One of the things we are going to see later is that the Heaader and the Question
+is always going to be in the message and the repsonses, but depending on what
+respons we get back the last three sections of the message will differ.
 
 ## The DNS Header
 
-So we are going to start out with the header, and an image usually says more than a 1000 words so we are going to extract an image (once again) rfc that shows the overall structure of the header section.
+So we are going to start out with the header, and an image usually says more
+than a 1000 words so we are going to extract an image (once again) rfc that
+shows the overall structure of the header section.
 
 ```bash
                                     1  1  1  1  1  1
@@ -189,8 +216,9 @@ So we are going to start out with the header, and an image usually says more tha
     +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
 ```
 
-A DNS header is always __12 bytes long__ and contains all the metadata for the message. This includes both information that has to do with the request, but also information about the response, since a DNS message is actually both.
-    <br />
+A DNS header is always __12 bytes long__ and contains all the metadata for the
+message. This includes both information that has to do with the request, but
+also information about the response, since a DNS message is actually both.
 
 ## Id
 ```bash
@@ -199,9 +227,14 @@ A DNS header is always __12 bytes long__ and contains all the metadata for the m
     |                      ID                       |
     +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
 ```
-A 16 bit identifier assigned by the program that generates the query.
-This identifier is copied over to the corresponding reply and can be used by the
-requester to match up replies to outstanding queries. So if you make a lot of requests, this id ccan help you match up what request to its corresponding response. For instance in a async environment.
+A 16 bit identifier assigned by the program that generates the query.  This
+identifier is copied over to the corresponding reply and can be used by the
+requester to match up replies to outstanding queries. So if you make a lot of
+requests, this id ccan help you match up what request to its corresponding
+response. For instance in a async environment.
+
+Our first 2 bytes have the hex number `98ad`, which converted to decmial is
+`39085` so that is our id for this request.
 
 ## Flags
 ```bash
@@ -210,16 +243,25 @@ requester to match up replies to outstanding queries. So if you make a lot of re
     |QR|   Opcode  |AA|TC|RD|RA|   Z    |   RCODE   |
     +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
 ```
-Several different flags that will for instance define what type of DNS message this is or provide instructions to the server of how you want it to process your request. This header will also contain a response code that will tell us of the outcome of the request (if there was an error or not etc.). 
+Several different flags that will for instance define what type of DNS message
+this is or provide instructions to the server of how you want it to process your
+request. This header will also contain a response code that will tell us of the
+outcome of the request (if there was an error or not etc.). 
 
-Lets go through all the fields one by one.
+    <br />
+    <br />
+    <br />
+    <br />
+Lets go through all the flags one by one.
 
-#### QR (Query/Response)
-A one bit field that specifies whether this message is a query (0), or a response (1).
+### - QR (Query/Response)
+A one bit field that specifies whether this message is a query (0), or a
+response (1).
 
-#### OPCODE (Operation Code)
-A four bit field that specifies what kind of query this message is. This value is set
-by the originator of a query and copied into the response. The values are:
+### - OPCODE (Operation Code)
+A four bit field that specifies what kind of query this message is. This value
+is set by the originator of a query and copied into the response. The values
+are:
 
         0               a standard query (QUERY)
 
@@ -229,7 +271,7 @@ by the originator of a query and copied into the response. The values are:
 
         3-15            reserved for future use
 
-#### AA (Authoritative Answer)
+### - AA (Authoritative Answer)
 this bit is valid in responses, and specifies if the responding name server is
 an authority for the domain name we are aasking about. Basically it denotes
 if the name server we asked has _responsabillity_ over the domain.
@@ -237,44 +279,47 @@ if the name server we asked has _responsabillity_ over the domain.
 Note that the contents of the answer section may have multiple owners because of
 aliases. This AA bit corresponds to the name which matches the query name.
 
-#### TC (TrunCation) 
+### - TC (TrunCation) 
 Specifies that this message was truncated due to length greater than that
 permitted on the transmission channel (so basically if this message was too long).
 
-#### RD (Recursion Desired)
-This bit can be set in a query and is copied into the response. If RD is set, it directs the name server to pursue the query recursively. So if the name server im asking doesn't know what the IP-address is for the domain i'm querying about, im telling the name server to start asking around to other name servers until it fins one that does know. This bit is usually always set, but there are some usercases when you dont want to do recursive lookups. 
+### - RD (Recursion Desired)
+This bit can be set in a query and is copied into the response. If RD is set, it
+directs the name server to pursue the query recursively. So if the name server
+im asking doesn't know what the IP-address is for the domain i'm querying about,
+im telling the name server to start asking around to other name servers until it
+fins one that does know. This bit is usually always set, but there are some
+usercases when you dont want to do recursive lookups. 
 
-#### RA (Recursion Available) 
+### - RA (Recursion Available) 
 This be is set or cleared in a response, and denotes whether recursive query
 support is available in the name server.
 
-#### Z               
+### - Z               
 Reserved for future use.  Must be zero in all queries and responses.
 
-#### RCODE         
+### - RCODE (Response Code)  
 Response code - this 4 bit field is set as part of responses.  The values have
 the following interpretation:
 
-          0.               __No error condition__
+0\. __No error condition__
 
-          1.               __Format error__ - The name server was unable to interpret the query.
+1\. __Format error__ - The name server was unable to interpret the query.
 
-          2.               __Server failure__ - The name server was unable to process this query due to a problem with the name 
-                           server.
+2\. __Server failure__ - The name server was unable to process this query due to
+a problem with the name server.
 
-          3.               __Name Error__ - 
-Meaningful only for responses from an authoritative name server, this code
-                           signifies that the domain name referenced in the query does not exist.
+3\. __Name Error__ - Meaningful only for responses from an authoritative name server, this code
+signifies that the domain name referenced in the query does not exist.
 
-          4.               __Not Implemented__ - The name server does not support the requested kind of query.
+4\. __Not Implemented__ - The name server does not support the requested kind of query.
 
-          5.               __Refused__
-The name server refuses to perform the specified operation for policy
-                           reasons. For example, a name server may not wish to provide the information to the
-                           particular requester, or a name server may not wish to perform a particular
-                           operation (e.g., zone transfer) for particular data.
+5\. __Refused__ - The name server refuses to perform the specified operation for policy
+reasons. For example, a name server may not wish to provide the information to the
+particular requester, or a name server may not wish to perform a particular
+operation (e.g., zone transfer) for particular data.
 
-          6-15             Reserved for future use.
+6-15\. __Reserved for future use__
 
 ## Count Section
 
@@ -290,25 +335,88 @@ The name server refuses to perform the specified operation for policy
     |                    ARCOUNT                    |
     +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
 ```
-#### QDCOUNT
+### QDCOUNT (Questions Defined)
 an unsigned 16 bit integer specifying the number of entries in the question
 section.
 
-#### ANCOUNT
+### ANCOUNT (Answers)
 an unsigned 16 bit integer specifying the number of resource records in the
 answer section.
 
-#### NSCOUNT
+### NSCOUNT (Name Servers)
 an unsigned 16 bit integer specifying the number of name server resource records
 in the authority records section.
 
-#### ARCOUNT
+### ARCOUNT (Additional Record)
 an unsigned 16 bit integer specifying the number of resource records in the
 additional records section.
 
+    <br />
+    <br />
+    <br />
+The 8 bytes after the id and flags are the 4 counters represented as u16s.
+
+```
+0001 0000 0000 0001
+
+QDCOUNT = 1
+ANCOUNT = 0
+NSCOUNT = 0
+ARCOUNT = 1
+```
+
+So our counters show us that there is one _question_ and one _additional record_ in our question.
+
+<InfoBox>
+ARCount is here set to 1 indicating that there is an _additional record_ included. DNS has pretty much _outgrown_ its header size and there was a need to be able to include more meta information in messages so DNS was extended in [rfc 6891](https://datatracker.ietf.org/doc/html/rfc6891) to include _psuedo records_ that can be used to include additional meta information in both requests and responses.
+</InfoBox>
 
 
 ## DNS Question section
+
+Lastly in a standard DNS message is the actual query. THis section contains the doman name we are asking for and and the definition of what type of _resource records_ we want.
+
+```bash
+                                    1  1  1  1  1  1
+      0  1  2  3  4  5  6  7  8  9  0  1  2  3  4  5
+    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+    |                                               |
+    /                     QNAME                     /
+    /                                               /
+    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+    |                     QTYPE                     |
+    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+    |                     QCLASS                    |
+    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+```
+
+The first part consists of a domain name which in the specification is called a _QNAME_ (question name). This is a dynamically sized field with a max value of 255 bytes. The format of the data is a mixture of numbers and _labels_ in the ASCII format, with each _label_ of a domain name prefixed by its length.
+
+```
+# format:
+<length><label><length><label><Nullbyte>
+
+# example:
+3www6google3com
+```
+
+So if we convert the data in our message from previous we see the following:
+```
+04 62 6c 6f 67 0c 74 6f 65 72 6b 74 75 6d 6c 61 72 65 03 63 6f 6d 00
+
+ 4  b  l  o  g 12  t  o  e  r  k  t  u  m  l  a  r  e  3  c  o  m NULL
+
+# result
+4 blog 12 toerktumlare 3 com NULL
+```
+
+As you can see no dots are included, they are substituted by the length value.
+
+<InfoBox>
+There are some aize limits defined in the RFC. For instance we are only allowed to have ASCII characters in names. Another restriction include a length limit of 63 octets or less, which means that is the length limit for a label in a domain name. This limit is actually defined because of how compression in DNS messages is implemented (the most significant bit is used, compression in DNS will be talked about in a different blog post). Additional limits that needs to be considered is 255 for a single domain name and 512 which is the maximum size of UDP messages as a whole.
+</InfoBox>
+
+
 ```bash
                                     1  1  1  1  1  1
       0  1  2  3  4  5  6  7  8  9  0  1  2  3  4  5
@@ -324,7 +432,7 @@ additional records section.
 ```
 
 ## DNS Resource record
-```
+```bash
                                     1  1  1  1  1  1
       0  1  2  3  4  5  6  7  8  9  0  1  2  3  4  5
     +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
@@ -349,4 +457,7 @@ additional records section.
 
 ## Message compression
 
-There is some compression actually built into the DNS format to send smaller messages. And im not going to explain how it works in this blog post but there might be a seperate post about it with a code example of how to solve the compression in DNS messages.
+There is some compression actually built into the DNS format to send smaller
+messages. And im not going to explain how it works in this blog post but there
+might be a seperate post about it with a code example of how to solve the
+compression in DNS messages.

@@ -103,9 +103,23 @@ export const GlobalStyle = createGlobalStyle`
     font-size: 36px;
   }
 
+  h3 {
+    margin-bottom: 2px;
+    color: var(--dark-warning-color);
+
+  }
+  
+  h4 {
+    margin-bottom: 2px;
+  }
+  
   p span {
     margin-top: 30px !important;
     margin-bottom: 30px !important;
+  }
+
+  ol li::before {
+    display: inline;
   }
 `
 
