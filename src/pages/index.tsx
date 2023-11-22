@@ -106,7 +106,7 @@ export const GlobalStyle = createGlobalStyle`
   h3 {
     margin-bottom: 2px;
     color: var(--dark-warning-color);
-
+    font-size: 26px;
   }
   
   h4 {

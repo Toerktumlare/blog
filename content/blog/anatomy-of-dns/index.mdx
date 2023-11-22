@@ -42,6 +42,8 @@ So think of DNS-servers as sort of old school phonebooks.
 The original DNS specification is defined in the rfc 1035, and we are going to
 reference that throughout this post.
 
+There has been significate updates of the DNS protocol throughout the years. Especially with the addition of _DNSSEC_ in January of 1997 through [rfc 2065](https://datatracker.ietf.org/doc/html/rfc2065), and later updated by [rfc 2535](https://datatracker.ietf.org/doc/html/rfc2535). _DNSSEC_ wont be covered in this post as it is a big topic.
+
 ## Lets make a DNS Request
 
 So in order to make a dns request there are several different dns clients out
@@ -91,8 +93,8 @@ tcpdump: verbose output suppressed, use -v[v]... for full protocol decode
 listening on any, link-type LINUX_SLL2 (Linux cooked v2), snapshot length 262144 bytes
 18:49:49.939297 lo    In  IP 127.0.0.1.38500 > 127.0.0.53.53: 39085+ [1au] A? blog.toerktumlare.com. (62)
 	0x0000:  4500 005a c2c1 0000 4011 b99b 7f00 0001  E..Z....@.......
-	0x0010:  7f00 0035 9664 0035 0046 fe8d 98ad 0120  ...5.d.5.F......
-	0x0020:  0001 0000 0000 0001 0462 6c6f 670c 746f  .........blog.to
+	0x0010:  7f00 0035 9664 0035 0046 fe8d 98ad 0100  ...5.d.5.F......
+	0x0020:  0001 0000 0000 0000 0462 6c6f 670c 746f  .........blog.to
 	0x0030:  6572 6b74 756d 6c61 7265 0363 6f6d 0000  erktumlare.com..
 	0x0040:  0100 0100 0029 04d0 0000 0000 000c 000a  .....)..........
 	0x0050:  0008 e157 ecab eb0d 51bd                 ...W....Q.
@@ -125,8 +127,8 @@ So if we isolate just the query:
 ```bash
 18:49:49.939297 lo    In  IP 127.0.0.1.38500 > 127.0.0.53.53: 39085+ [1au] A? blog.toerktumlare.com. (62)
 	0x0000:  4500 005a c2c1 0000 4011 b99b 7f00 0001  E..Z....@.......
-	0x0010:  7f00 0035 9664 0035 0046 fe8d 98ad 0120  ...5.d.5.F......
-	0x0020:  0001 0000 0000 0001 0462 6c6f 670c 746f  .........blog.to
+	0x0010:  7f00 0035 9664 0035 0046 fe8d 98ad 0100  ...5.d.5.F......
+	0x0020:  0001 0000 0000 0000 0462 6c6f 670c 746f  .........blog.to
 	0x0030:  6572 6b74 756d 6c61 7265 0363 6f6d 0000  erktumlare.com..
 	0x0040:  0100 0100 0029 04d0 0000 0000 000c 000a  .....)..........
 	0x0050:  0008 e157 ecab eb0d 51bd                 ...W....Q.
@@ -195,8 +197,9 @@ respons we get back the last three sections of the message will differ.
 ## The DNS Header
 
 So we are going to start out with the header, and an image usually says more
-than a 1000 words so we are going to extract an image (once again) rfc that
-shows the overall structure of the header section.
+than a 1000 words so we are going to extract an image (once again) [rfc
+1035](https://datatracker.ietf.org/doc/html/rfc1035#section-4.1.1) that shows
+the overall structure of the header section.
 
 ```bash
                                     1  1  1  1  1  1
@@ -362,13 +365,13 @@ The 8 bytes after the id and flags are the 4 counters represented as u16s.
 QDCOUNT = 1
 ANCOUNT = 0
 NSCOUNT = 0
-ARCOUNT = 1
+ARCOUNT = 0
 ```
 
-So our counters show us that there is one _question_ and one _additional record_ in our question.
+So our counters show us that there is one _question_ in our message.
 
 <InfoBox>
-ARCount is here set to 1 indicating that there is an _additional record_ included. DNS has pretty much _outgrown_ its header size and there was a need to be able to include more meta information in messages so DNS was extended in [rfc 6891](https://datatracker.ietf.org/doc/html/rfc6891) to include _psuedo records_ that can be used to include additional meta information in both requests and responses.
+ARCount is comomnly set to 1 indicating that there is an _additional record_ included. DNS has pretty much _outgrown_ its header size and there was a need to be able to include more meta information in messages so DNS was extended in [rfc 6891](https://datatracker.ietf.org/doc/html/rfc6891) to include _psuedo records_ that is used to include additional meta information in both requests and responses.
 </InfoBox>
 
 
@@ -389,10 +392,13 @@ Lastly in a standard DNS message is the actual query. THis section contains the 
     |                     QCLASS                    |
     +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
 ```
+<br />
+<br/>
+### QNAME (Question Name)
 
 The first part consists of a domain name which in the specification is called a _QNAME_ (question name). This is a dynamically sized field with a max value of 255 bytes. The format of the data is a mixture of numbers and _labels_ in the ASCII format, with each _label_ of a domain name prefixed by its length.
 
-```
+```bash
 # format:
 <length><label><length><label><Nullbyte>
 
@@ -400,30 +406,37 @@ The first part consists of a domain name which in the specification is called a 
 3www6google3com
 ```
 
+<br/>
+<br/>
 So if we convert the data in our message from previous we see the following:
-```
+```bash
+# hex values
 04 62 6c 6f 67 0c 74 6f 65 72 6b 74 75 6d 6c 61 72 65 03 63 6f 6d 00
 
+# numeric and ascii values
  4  b  l  o  g 12  t  o  e  r  k  t  u  m  l  a  r  e  3  c  o  m NULL
 
-# result
+# result formatted
 4 blog 12 toerktumlare 3 com NULL
 ```
 
 As you can see no dots are included, they are substituted by the length value.
 
+<br/>
+<br/>
 <InfoBox>
-There are some aize limits defined in the RFC. For instance we are only allowed to have ASCII characters in names. Another restriction include a length limit of 63 octets or less, which means that is the length limit for a label in a domain name. This limit is actually defined because of how compression in DNS messages is implemented (the most significant bit is used, compression in DNS will be talked about in a different blog post). Additional limits that needs to be considered is 255 for a single domain name and 512 which is the maximum size of UDP messages as a whole.
+There are some size limits defined in the RFC. We are only allowed to have ASCII characters in names. Additional restriction include a length limit of 63 octets or less. This limit is actually defined because of how compression in DNS messages is implemented. Additional limits that need to be considered is 255 bytes for a single domain name and 512 bytes which is the maximum size of UDP messages.
 </InfoBox>
+<br/>
+<br/>
+<br/>
+<br/>
+### QTYPE and QCLASS
 
+The last parts of the body section of dns message is the _QType_ and _QClass_.
 
 ```bash
-                                    1  1  1  1  1  1
       0  1  2  3  4  5  6  7  8  9  0  1  2  3  4  5
-    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
-    |                                               |
-    /                     QNAME                     /
-    /                                               /
     +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
     |                     QTYPE                     |
     +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
@@ -431,28 +444,78 @@ There are some aize limits defined in the RFC. For instance we are only allowed 
     +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
 ```
 
-## DNS Resource record
+The _QType_ value is the more important value of the two. This value defines what kind of record we would like to have returned. Common questions would for instance to ask for an _A_ record, or maybe a _CNAME_ record. Each record has a defined number, and the [dns rfc specifies a list](https://datatracker.ietf.org/doc/html/rfc1035#section-3.2.2) of type values. Throughout the years, more types have been added for instance the _AAAA_ record was added to support ipv6 was [first added in December 1995](https://datatracker.ietf.org/doc/html/rfc1886) and later [updated in October 2003](https://datatracker.ietf.org/doc/html/rfc3596).
+
+Lastly _QClass_ was previously used to define in what type of network the query was made. It only has 4 definitions:
+
+        IN                1 the Internet
+
+        CS                2 the CSNET class (Obsolete - used only for examples in some obsolete RFCs)
+
+        CH                3 the CHAOS class
+
+        HS                4 Hesiod [Dyer 87]
+
+Nowdays most of these definitions are deprecated so in a standard DNS query this value is always set to 1 to represent _the internet_.
+
+## Analysing our full question
+
+So if we do a full breakdown of our request we get the following:
+
 ```bash
-                                    1  1  1  1  1  1
-      0  1  2  3  4  5  6  7  8  9  0  1  2  3  4  5
-    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
-    |                                               |
-    /                                               /
-    /                      NAME                     /
-    |                                               |
-    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
-    |                      TYPE                     |
-    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
-    |                     CLASS                     |
-    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
-    |                      TTL                      |
-    |                                               |
-    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
-    |                   RDLENGTH                    |
-    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--|
-    /                     RDATA                     /
-    /                                               /
-    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+# id
+98ad                                                   # => 39085
+
+# header
+0100                                                   # => b0000_0001 b0000_0000
+                                                       # query    = 0
+                                                       # opcode   = 0
+                                                       # Authoritive Answer = 0
+                                                       # TrunCation = 0
+                                                       # Recursion Desired = 1
+                                                       # Recursion Available = 0
+                                                       # Z = 0
+                                                       # Response Code = 0
+ 
+
+# qdcount
+0001                                                   # => One question
+
+# ancount
+0000                                                   # => No answer 
+
+# nscount
+0000                                                   # => No name server record
+
+#arcount
+0001                                                   # => one additional record 
+
+# length
+04                                                     # => 4
+
+# label
+626c 6f67                                              #  => "blog"
+
+#length
+0c                                                     # => 12
+
+# label
+746f 6572 6b74 756d 6c61 7265                          # => "toerktumlare"
+
+# length
+03                                                     # => 3
+
+# label
+636f 6d                                                # => com
+
+# null byte
+00 
+
+# QType
+0001                                                   # => A-record 
+
+#QClass
+0001                                                   # => IN (internet)
 ```
 
 ## Message compression
