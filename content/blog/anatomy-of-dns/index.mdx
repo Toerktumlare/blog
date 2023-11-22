@@ -1,27 +1,34 @@
 ---
-title: Anatomy of a DNS Request/Response
+title: A DNS-message breakdown no one asked for
 date: "2023-11-10T21:08:00.000Z"
-description: "One of the things that i have always been bad at is networking, and i during my _interneting_ i stumbled
-upon a blog post taling about DNS. So i decided i would create a DNS client in Rust. SO might write a couple of post
-about my adventures writing it. This first post will talk about the anatomy."
-tags: rust, binary
+description: "One of the things that i have always been bad at is networking, and i during my interneting i stumbled
+upon a blog post talking about DNS. So i decided i would create a DNS client in Rust. So might write a couple of post
+about my adventures writing it. This post explains a lot of basics"
+tags: rust, binary, networking
 ---
 import Blockquote from "../../../src/elements/boxes/Blockquote";
 import InfoBox from "../../../src/elements/boxes/WarningBox";
 
 I like to just randomly spend my time on the internet, and every once in a while
-i stumble upon interesting blog posts.  I have for a very long time considered
-myself really bad at everything related to networking. So when i find good blog
-posts about things im weak they get stuck in my head.
+i stumble upon interesting blog posts. I have for a very long time considered
+myself really bad at everything related to networking. 
 
-It was blog post about how you would go about to write a DNS client. I just
-glanced through it without looking at any implementations, I then decided to
-look up the RFC and suddenly had this feeling that... i could write one of
-those.
+I found this blog post about how you would go about to write a DNS client. I just
+glanced through it without looking at any implementations, and then decided to
+look up the RFC and suddenly had this feeling that... i could write a client myself.
 
-So in some blog posts i will write about all the things i learnt during the
-development and they will both be DNS related, but also coding related, and how
-i solved ceratin problems.
+Julia Evans at [wizard zines](https://wizardzines.com/comics/dns-packet/) makes
+these amazing comics and she had this image that showed what a DNS
+request/response looked like and it looked so simple.
+
+![DNS packet](./dns-packet.png)
+
+
+So in this blog posts and maybe some additional blog posts i will write about
+all the things i learnt during the development of my dns client [Who are
+you?](https://github.com/Tandolf/who) written in rust. Some thing might be
+specification related related, and others might be coding/implementation
+related. For instance how i solved certain problems in code.
 
 ## What is DNS (Domain Name System)?
 
@@ -35,14 +42,13 @@ computer services and devices with the underlying network protocols.
     </Blockquote>
 
 The short explanation is that the internet has no idea what web addresses are,
-the internet works with ip addresses. SO all over the internet there are DNS
-servers that you can query by a web address and get an ip-address back instead.
+the internet works with ip addresses. So all over the internet there are DNS
+servers that you can query with a domain name and get an ip-address back instead.
 So think of DNS-servers as sort of old school phonebooks.
 
-The original DNS specification is defined in the rfc 1035, and we are going to
-reference that throughout this post.
+The original DNS specification is defined in the [rfc 1035](https://datatracker.ietf.org/doc/html/rfc1035), and we are going to reference that throughout this post.
 
-There has been significate updates of the DNS protocol throughout the years. Especially with the addition of _DNSSEC_ in January of 1997 through [rfc 2065](https://datatracker.ietf.org/doc/html/rfc2065), and later updated by [rfc 2535](https://datatracker.ietf.org/doc/html/rfc2535). _DNSSEC_ wont be covered in this post as it is a big topic.
+There has been significate updates of the DNS protocol throughout the years. Especially with the addition of _DNSSEC_ which currently is defined by [rfc 4033](https://datatracker.ietf.org/doc/html/rfc4033), [rfc4034](https://datatracker.ietf.org/doc/html/rfc4034) and [rfc4035](https://datatracker.ietf.org/doc/html/rfc4035). _DNSSEC_ wont be covered in this post as it is a big topic.
 
 ## Lets make a DNS Request
 
@@ -93,7 +99,7 @@ tcpdump: verbose output suppressed, use -v[v]... for full protocol decode
 listening on any, link-type LINUX_SLL2 (Linux cooked v2), snapshot length 262144 bytes
 18:49:49.939297 lo    In  IP 127.0.0.1.38500 > 127.0.0.53.53: 39085+ [1au] A? blog.toerktumlare.com. (62)
 	0x0000:  4500 005a c2c1 0000 4011 b99b 7f00 0001  E..Z....@.......
-	0x0010:  7f00 0035 9664 0035 0046 fe8d 98ad 0100  ...5.d.5.F......
+	0x0010:  7f00 0035 9664 0035 0046 fe8d 98ad 0120  ...5.d.5.F......
 	0x0020:  0001 0000 0000 0000 0462 6c6f 670c 746f  .........blog.to
 	0x0030:  6572 6b74 756d 6c61 7265 0363 6f6d 0000  erktumlare.com..
 	0x0040:  0100 0100 0029 04d0 0000 0000 000c 000a  .....)..........
@@ -127,7 +133,7 @@ So if we isolate just the query:
 ```bash
 18:49:49.939297 lo    In  IP 127.0.0.1.38500 > 127.0.0.53.53: 39085+ [1au] A? blog.toerktumlare.com. (62)
 	0x0000:  4500 005a c2c1 0000 4011 b99b 7f00 0001  E..Z....@.......
-	0x0010:  7f00 0035 9664 0035 0046 fe8d 98ad 0100  ...5.d.5.F......
+	0x0010:  7f00 0035 9664 0035 0046 fe8d 98ad 0120  ...5.d.5.F......
 	0x0020:  0001 0000 0000 0000 0462 6c6f 670c 746f  .........blog.to
 	0x0030:  6572 6b74 756d 6c61 7265 0363 6f6d 0000  erktumlare.com..
 	0x0040:  0100 0100 0029 04d0 0000 0000 000c 000a  .....)..........
@@ -135,7 +141,7 @@ So if we isolate just the query:
 ```
 
 We see that there is some text and just a bunch of different hex numbers. Out of
-all thsese hexnumbers we need first start to discard all the things we dont
+all these hex numbers we need first start to discard all the things we don't
 need. The first `20 bytes` is the ipv4 header so we can discard that.
 
 The ipv4 header:
@@ -155,7 +161,7 @@ The UDP header:
 
 Its worth noting that the specification has been updated several times, and that
 you can in fact send DNS over TCP (most DNS resolvers will accept it) and that DNSSec
-has also been introduced wich adds a lot of security features to the protocol.
+has also been introduced which adds a lot of security features to the protocol.
     <br />
     <br />
     <br />
@@ -190,9 +196,9 @@ messages, both requests and responses, has the following general structure.
     +---------------------+
 ```
 
-One of the things we are going to see later is that the Heaader and the Question
-is always going to be in the message and the repsonses, but depending on what
-respons we get back the last three sections of the message will differ.
+One of the things we are going to see later is that the Header and the Question
+is always going to be in the message and the responses, but depending on what
+response we get back the last three sections of the message will differ.
 
 ## The DNS Header
 
@@ -236,7 +242,7 @@ requester to match up replies to outstanding queries. So if you make a lot of
 requests, this id ccan help you match up what request to its corresponding
 response. For instance in a async environment.
 
-Our first 2 bytes have the hex number `98ad`, which converted to decmial is
+Our first 2 bytes have the hex number `98ad`, which converted to decimal is
 `39085` so that is our id for this request.
 
 ## Flags
@@ -276,8 +282,8 @@ are:
 
 ### - AA (Authoritative Answer)
 this bit is valid in responses, and specifies if the responding name server is
-an authority for the domain name we are aasking about. Basically it denotes
-if the name server we asked has _responsabillity_ over the domain.
+an authority for the domain name we are asking about. Basically it denotes
+if the name server we asked has _responsibility_ over the domain.
 
 Note that the contents of the answer section may have multiple owners because of
 aliases. This AA bit corresponds to the name which matches the query name.
@@ -292,7 +298,7 @@ directs the name server to pursue the query recursively. So if the name server
 im asking doesn't know what the IP-address is for the domain i'm querying about,
 im telling the name server to start asking around to other name servers until it
 fins one that does know. This bit is usually always set, but there are some
-usercases when you dont want to do recursive lookups. 
+user cases when you don't want to do recursive lookups. 
 
 ### - RA (Recursion Available) 
 This be is set or cleared in a response, and denotes whether recursive query
@@ -353,7 +359,6 @@ in the authority records section.
 ### ARCOUNT (Additional Record)
 an unsigned 16 bit integer specifying the number of resource records in the
 additional records section.
-
     <br />
     <br />
     <br />
@@ -365,19 +370,19 @@ The 8 bytes after the id and flags are the 4 counters represented as u16s.
 QDCOUNT = 1
 ANCOUNT = 0
 NSCOUNT = 0
-ARCOUNT = 0
+ARCOUNT = 1
 ```
 
-So our counters show us that there is one _question_ in our message.
+So our counters show us that there is one _question_ and one _additional record_ in our message.
 
 <InfoBox>
-ARCount is comomnly set to 1 indicating that there is an _additional record_ included. DNS has pretty much _outgrown_ its header size and there was a need to be able to include more meta information in messages so DNS was extended in [rfc 6891](https://datatracker.ietf.org/doc/html/rfc6891) to include _psuedo records_ that is used to include additional meta information in both requests and responses.
+ARCount is commonly set to 1 indicating that there is an _additional record_ included. DNS has pretty much _outgrown_ its header size and there was a need to be able to include more meta information in messages so DNS was extended in [rfc 6891](https://datatracker.ietf.org/doc/html/rfc6891) to include _pseudo records_ that is used to include additional meta information in both requests and responses.
 </InfoBox>
 
 
 ## DNS Question section
 
-Lastly in a standard DNS message is the actual query. THis section contains the doman name we are asking for and and the definition of what type of _resource records_ we want.
+Lastly in a standard DNS message is the actual query. THis section contains the domain name we are asking for and and the definition of what type of _resource records_ we want.
 
 ```bash
                                     1  1  1  1  1  1
@@ -400,7 +405,7 @@ The first part consists of a domain name which in the specification is called a 
 
 ```bash
 # format:
-<length><label><length><label><Nullbyte>
+<length><label><length><label><Null>
 
 # example:
 3www6google3com
@@ -456,7 +461,7 @@ Lastly _QClass_ was previously used to define in what type of network the query 
 
         HS                4 Hesiod [Dyer 87]
 
-Nowdays most of these definitions are deprecated so in a standard DNS query this value is always set to 1 to represent _the internet_.
+Nowadays most of these definitions are deprecated so in a standard DNS query this value is always set to 1 to represent _the internet_.
 
 ## Analysing our full question
 
@@ -470,7 +475,7 @@ So if we do a full breakdown of our request we get the following:
 0100                                                   # => b0000_0001 b0000_0000
                                                        # query    = 0
                                                        # opcode   = 0
-                                                       # Authoritive Answer = 0
+                                                       # Authoritative Answer = 0
                                                        # TrunCation = 0
                                                        # Recursion Desired = 1
                                                        # Recursion Available = 0
@@ -487,7 +492,7 @@ So if we do a full breakdown of our request we get the following:
 # nscount
 0000                                                   # => No name server record
 
-#arcount
+# arcount
 0001                                                   # => one additional record 
 
 # length
@@ -516,11 +521,22 @@ So if we do a full breakdown of our request we get the following:
 
 #QClass
 0001                                                   # => IN (internet)
+
+# OPT resource record (rfc6891)
+0000 2904 d000 0000 0000 0c00 0a00 08e1 57ec abeb 0d51 bd
 ```
+
+## OPT RR-Record
+The last bytes in our DNS message is what is called an _optional resource record_ and is an extension that was added to expand on the capabilities of DNS. This feature is OPTIONAL and `dig` uses this feature when doing requests. As it is optional, means that most DNS servers will accept queries without this additional resource record.
 
 ## Message compression
 
 There is some compression actually built into the DNS format to send smaller
 messages. And im not going to explain how it works in this blog post but there
-might be a seperate post about it with a code example of how to solve the
+might be a separate post about it with a code example of how to solve the
 compression in DNS messages.
+
+# Final Thoughts
+DNS is a fascinating protocol that is used all over the internet. It has been expanded many times, and you can sense a lot of the _old internet_ within the protocol. By breaking down these messages, i managed to learn a lot more about DNS and networking in general.
+
+You are welcome to check out my simple implementation of my basic dns client [Who are you?](https://www.github.com/tandolf/who) written in rust.
