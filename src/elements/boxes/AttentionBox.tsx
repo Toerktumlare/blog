@@ -16,6 +16,13 @@ const StyledWrapper = styled("div") <WrapperStyled>`
     font-size: ${props => props.fontSize + "px" || 'var(--font-size)'};
     line-height: 1.2em;
   }
+  em {
+    color: ${props => props.textColor || 'var(--font-color)'};
+  }
+  a {
+    text-decoration: underline;
+    color: ${props => props.textColor || 'var(--font-color)'};
+  }
 `
 
 export const Header = styled.div`
