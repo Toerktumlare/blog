@@ -32,8 +32,9 @@ On the world wide web, base64 is very common to use when wanting to send send fi
 Image below shows how base64 could be used when sending an image from one server to another server.
 
 ```mermaid
+%%{init: {'theme':'dark'}}%%
 graph LR
-    A("image -> base64(image)")-- encoded-data -->B("base64(image) -> image")
+    A(image)-->B(encode base64)-- encoded-data -->C(decode base64)--> D(image)
 ```
 
 - We encode our data into base64, a textual representation of the data.
