@@ -7,7 +7,7 @@ about my adventures writing it. This post explains a lot of basics"
 tags: rust, binary, networking
 ---
 import Blockquote from "../../../src/elements/boxes/Blockquote";
-import InfoBox from "../../../src/elements/boxes/WarningBox";
+import WarnBox from "../../../src/elements/boxes/WarningBox";
 
 I like to just randomly spend my time on the internet, and every once in a while
 i stumble upon interesting blog posts. I have for a very long time considered
@@ -375,9 +375,9 @@ ARCOUNT = 1
 
 So our counters show us that there is one _question_ and one _additional record_ in our message.
 
-<InfoBox>
+<WarnBox>
 ARCount is commonly set to 1 indicating that there is an _additional record_ included. DNS has pretty much _outgrown_ its header size and there was a need to be able to include more meta information in messages so DNS was extended in [rfc 6891](https://datatracker.ietf.org/doc/html/rfc6891) to include _pseudo records_ that is used to include additional meta information in both requests and responses.
-</InfoBox>
+</WarnBox>
 
 
 ## DNS Question section
@@ -429,9 +429,9 @@ As you can see no dots are included, they are substituted by the length value.
 
 <br/>
 <br/>
-<InfoBox>
+<WarnBox>
 There are some size limits defined in the RFC. We are only allowed to have ASCII characters in names. Additional restriction include a length limit of 63 octets or less. This limit is actually defined because of how compression in DNS messages is implemented. Additional limits that need to be considered is 255 bytes for a single domain name and 512 bytes which is the maximum size of UDP messages.
-</InfoBox>
+</WarnBox>
 <br/>
 <br/>
 <br/>
