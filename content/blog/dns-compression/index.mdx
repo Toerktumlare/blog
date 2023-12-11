@@ -263,7 +263,8 @@ pub fn parse_names<'a>(
                     b = buffer;
                 }
 
-                // if ptr enum, slice the original message from the offset value, and recurse using that buffer
+                // if ptr enum, slice the original message from the offset
+                // value, and recurse using that buffer
                 CtrlByte::Ptr(index) => {
                     let (_, _) = parse_names(&source[index as usize..], source, tokens)?;
                     b = buffer;
